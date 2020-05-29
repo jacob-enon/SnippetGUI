@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SnippetGUI.Data;
+using System.IO;
 
 namespace SnippetGUITests
 {
@@ -10,7 +11,7 @@ namespace SnippetGUITests
         public void GetLanguages_ReturnsListOfLanguages()
         {
             // Arrange
-            var config = "test_data\\languages.json";
+            var config = Path.Combine("test_data", "languages.json");
             var data = new DataAccess(config);
 
             // Act

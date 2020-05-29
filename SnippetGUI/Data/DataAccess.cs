@@ -12,9 +12,9 @@ namespace SnippetGUI.Data
     {
         private readonly string languages;
 
-        public DataAccess(string languages = "languages.json")
+        public DataAccess(string languages = null)
         {
-            this.languages = languages;
+            this.languages = languages ?? Path.Combine("Config", "languages.json");
         }
 
         public IList<string> GetLanguages()

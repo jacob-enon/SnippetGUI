@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SnippetGUI.Data
 {
-    interface IDataAccess
+    public interface IDataAccess
     {
         IList<string> GetLanguages();
     }

@@ -6,5 +6,6 @@ namespace SnippetGUI.Data
 {
     interface IDataAccess
     {
+        IList<string> GetLanguages();
     }
 }

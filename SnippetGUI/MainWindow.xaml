@@ -5,8 +5,77 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SnippetGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="300" Width="800">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="MinWidth" Value="200" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="MinWidth" Value="200" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="MinWidth" Value="70" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5" />
+        </Style>
+    </Window.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
 
+        <Label Grid.Column="1" Grid.Row="1"
+               Content="Title" />
+        <TextBox Grid.Column="2" Grid.Row="1"/>
+
+        <Label Grid.Column="1" Grid.Row="2"
+               Content="Author" />
+        <TextBox Grid.Column="2" Grid.Row="2" />
+
+        <Label Grid.Column="1" Grid.Row="3"
+               Content="Description" />
+        <ScrollViewer Grid.Column="2" Grid.Row="3"
+                      VerticalScrollBarVisibility="Auto">
+            <TextBox
+                 TextWrapping="Wrap"/>
+        </ScrollViewer>
+
+        <Label Grid.Column="1" Grid.Row="4"
+               Content="Shortcut" />
+        <TextBox Grid.Column="2" Grid.Row="4" />
+
+        <Label Grid.Column="1" Grid.Row="5"
+               Content="Language" />
+        <ComboBox Grid.Column="2" Grid.Row="5" />
+
+        <Label Grid.Column="3" Grid.Row="1"
+               Content="Code" />
+        <ScrollViewer Grid.Column="4" Grid.Row="1"
+                      Grid.RowSpan="4"
+                      VerticalScrollBarVisibility="Auto">
+            <TextBox AcceptsReturn="True"
+                 TextWrapping="WrapWithOverflow"/>
+        </ScrollViewer>
+
+        <Button Grid.Column="4" Grid.Row="5"
+                Content="Generate" />
     </Grid>
 </Window>

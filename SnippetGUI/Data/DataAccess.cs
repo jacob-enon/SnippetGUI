@@ -1,26 +1,37 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Text.Json.Serialization;
 
 namespace SnippetGUI.Data
 {
+    /// <summary>
+    /// Accesses config files
+    /// </summary>
     public class DataAccess : IDataAccess
     {
         private readonly string languages;
 
+        /// <summary>
+        /// Construct a new DataAccess
+        /// </summary>
+        /// <param name="languages"> Config file for available snippet languages </param>
         public DataAccess(string languages = null)
         {
             this.languages = languages ?? Path.Combine("Config", "languages.json");
         }
 
-        public IList<string> GetLanguages()
-        {
-            var languagesData = File.ReadAllText(languages);
-            return JsonConvert.DeserializeObject<List<string>>(languagesData);
-        }
+        /// <summary>
+        /// Get all available snippet languages
+        /// </summary>
+        /// <returns> IList of available languages </returns>
+        public IList<string> GetLanguages() => DeserializeJsonFile<List<string>>(languages);
+
+        /// <summary>
+        /// Deserialize a JSON file
+        /// </summary>
+        /// <typeparam name="T"> Type of object to deserialize </typeparam>
+        /// <param name="path"> Path of the JSON file </param>
+        /// <returns> Deserialized object </returns>
+        private T DeserializeJsonFile<T>(string path) => JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
     }
 }

@@ -1,7 +1,6 @@
 ﻿using SnippetGUI.Data;
 using SnippetGUI.Model;
 using System.Collections.ObjectModel;
-using System.Security.Cryptography;
 
 namespace SnippetGUI.ViewModel
 {
@@ -142,7 +141,7 @@ namespace SnippetGUI.ViewModel
         /// Construct a new MainViewModel
         /// </summary>
         /// <param name="dataAccess"> Data Access for config files </param>
-        /// <param name="snippetBuilder"> Snippet Builder to generat snippet </param>
+        /// <param name="snippetBuilder"> Snippet Builder to generate snippet </param>
         public MainViewModel(IDataAccess dataAccess, ISnippetBuilder snippetBuilder)
         {
             this.dataAccess = dataAccess ?? new DataAccess();

@@ -14,120 +14,120 @@ namespace SnippetGUI.ViewModel
         private readonly IDataAccess dataAccess;
         private readonly ISnippetBuilder snippetBuilder;
 
-        private string title;
+        private string _title;
         /// <summary>
         /// The title of the snippet
         /// </summary>
         public string Title
         {
-            get => title;
+            get => _title;
             set
             {
-                if (title != value)
+                if (_title != value)
                 {
-                    title = value;
+                    _title = value;
                     OnPropertyChanged();
                 }
             }
         }
 
-        private string author;
+        private string _author;
         /// <summary>
         /// The author of the snippet
         /// </summary>
         public string Author
         {
-            get => author;
+            get => _author;
             set
             {
-                if (author != value)
+                if (_author != value)
                 {
-                    author = value;
+                    _author = value;
                     OnPropertyChanged();
                 }
             }
         }
 
-        private string description;
+        private string _description;
         /// <summary>
         /// The description of the snippet
         /// </summary>
         public string Description
         {
-            get => description;
+            get => _description;
             set
             {
-                if (description != value)
+                if (_description != value)
                 {
-                    description = value;
+                    _description = value;
                     OnPropertyChanged();
                 }
             }
         }
 
-        private string shortcut;
+        private string _shortcut;
         /// <summary>
         /// The shortcut to access the snippet
         /// </summary>
         public string Shortcut
         {
-            get => shortcut;
+            get => _shortcut;
             set
             {
-                if (shortcut != value)
+                if (_shortcut != value)
                 {
-                    shortcut = value;
+                    _shortcut = value;
                     OnPropertyChanged();
                 }
             }
         }
 
-        private string language;
+        private string _language;
         /// <summary>
         /// The language the snippet applies to
         /// </summary>
         public string Language
         {
-            get => language;
+            get => _language;
             set
             {
-                if (language != value)
+                if (_language != value)
                 {
-                    language = value;
+                    _language = value;
                     OnPropertyChanged();
                 }
             }
         }
 
-        private string code;
+        private string _code;
         /// <summary>
         /// The code for the snippet
         /// </summary>
         public string Code
         {
-            get => code;
+            get => _code;
             set
             {
-                if (code != value)
+                if (_code != value)
                 {
-                    code = value;
+                    _code = value;
                     OnPropertyChanged();
                 }
             }
         }
 
-        private ObservableCollection<string> languages;
+        private ObservableCollection<string> _languages;
         /// <summary>
         /// Available languages that the snippet can be coded in
         /// </summary>
         public ObservableCollection<string> Languages
         {
-            get => languages;
+            get => _languages;
             set
             {
-                if (languages != value)
+                if (_languages != value)
                 {
-                    languages = value;
+                    _languages = value;
                     OnPropertyChanged();
                 }
             }

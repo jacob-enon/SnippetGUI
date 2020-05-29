@@ -7,6 +7,60 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
 
+        <Label Grid.Column="1" Grid.Row="1"
+               Content="Title" />
+        <TextBox Grid.Column="2" Grid.Row="1"/>
+
+        <Label Grid.Column="1" Grid.Row="2"
+               Content="Author" />
+        <TextBox Grid.Column="2" Grid.Row="2" />
+
+        <Label Grid.Column="1" Grid.Row="3"
+               Content="Description" />
+        <ScrollViewer Grid.Column="2" Grid.Row="3"
+                      Height="60"
+                      VerticalScrollBarVisibility="Auto">
+            <TextBox
+                 TextWrapping="Wrap"/>
+        </ScrollViewer>
+
+        <Label Grid.Column="1" Grid.Row="4"
+               Content="Shortcut" />
+        <TextBox Grid.Column="2" Grid.Row="4" />
+
+        <Label Grid.Column="1" Grid.Row="5"
+               Content="Language" />
+        <ComboBox Grid.Column="2" Grid.Row="5" />
+
+        <Label Grid.Column="3" Grid.Row="1"
+               Content="Code" />
+        <ScrollViewer Grid.Column="4" Grid.Row="1"
+                      Grid.RowSpan="4"
+                      Height="138"
+                      VerticalScrollBarVisibility="Auto">
+            <TextBox AcceptsReturn="True"
+                 TextWrapping="WrapWithOverflow"/>
+        </ScrollViewer>
+
+        <Button Grid.Column="4" Grid.Row="5"
+                Content="Generate" />
     </Grid>
 </Window>

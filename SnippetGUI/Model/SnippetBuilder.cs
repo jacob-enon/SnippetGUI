@@ -49,7 +49,7 @@ namespace SnippetGUI.Model
         public string GenerateSnippet()
         {
             dynamic templateData = JsonConvert.DeserializeObject(File.ReadAllText(templateLocation));
-            replacementMarker = templateData.replacement_marker;
+            replacementMarker = templateData.replace_marker;
             template = templateData.template;
 
             return FillTemplate();

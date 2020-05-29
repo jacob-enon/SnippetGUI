@@ -1,0 +1,4 @@
+{
+  "replace_marker": "$",
+  "template": "$title$$author$$description$$shortcut$$language$$code$"
+}

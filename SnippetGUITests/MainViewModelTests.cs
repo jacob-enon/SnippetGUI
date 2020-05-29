@@ -17,7 +17,7 @@ namespace SnippetGUITests
             var dataAccess = new DataAccess(languages);
 
             // Act
-            var vm = new MainViewModel(dataAccess, new SnippetBuilder());
+            var vm = new MainViewModel(dataAccess);
 
             // Assert
             Assert.AreEqual("language 1", vm.Languages[0]);

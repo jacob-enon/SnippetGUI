@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SnippetGUI.Data;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SnippetGUI.ViewModel
@@ -10,6 +12,7 @@ namespace SnippetGUI.ViewModel
     public class MainViewModel : BaseViewModel
     {
         #region Properties
+        private readonly IDataAccess dataAccess;
 
         private string title;
         /// <summary>
@@ -113,6 +116,35 @@ namespace SnippetGUI.ViewModel
             }
         }
 
+        private ObservableCollection<string> languages;
+        /// <summary>
+        /// Available languages, in which the snippet can be coded
+        /// </summary>
+        public ObservableCollection<string> Languages
+        {
+            get => languages;
+            set
+            {
+                if (languages != value)
+                {
+                    languages = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         #endregion
+
+        /// <summary>
+        /// Construct a new MainViewModel
+        /// </summary>
+        /// <param name="dataAccess"> Data Access for config files </param>
+        public MainViewModel(IDataAccess dataAccess)
+        {
+            this.dataAccess = dataAccess ?? new DataAccess();
+            Languages = new ObservableCollection<string>(this.dataAccess.GetLanguages());
+        }
+
+        public MainViewModel() : this(new DataAccess()) { }
     }
 }

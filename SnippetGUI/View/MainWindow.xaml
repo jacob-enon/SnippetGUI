@@ -87,6 +87,7 @@
         </ScrollViewer>
 
         <Button Grid.Column="4" Grid.Row="5"
-                Content="Generate" />
+                Content="Generate Snippet"
+                Command="{Binding GenerateSnippet}"/>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
 ﻿using SnippetGUI.Data;
+using SnippetGUI.Model;
 using System.Collections.ObjectModel;
 
 namespace SnippetGUI.ViewModel
@@ -11,6 +12,7 @@ namespace SnippetGUI.ViewModel
         #region Properties
 
         private readonly IDataAccess dataAccess;
+        private readonly ISnippetBuilder snippetBuilder;
 
         private string _title;
         /// <summary>
@@ -139,13 +141,30 @@ namespace SnippetGUI.ViewModel
         /// Construct a new MainViewModel
         /// </summary>
         /// <param name="dataAccess"> Data Access for config files </param>
-        public MainViewModel(IDataAccess dataAccess)
+        /// <param name="snippetBuilder"> Snippet Builder to generate snippet </param>
+        public MainViewModel(IDataAccess dataAccess, ISnippetBuilder snippetBuilder)
         {
             this.dataAccess = dataAccess ?? new DataAccess();
+            this.snippetBuilder = snippetBuilder ?? new SnippetBuilder();
+
             Languages = new ObservableCollection<string>(this.dataAccess.GetLanguages());
         }
 
-        public MainViewModel() : this(new DataAccess()) { }
+        /// <summary>
+        /// Construct a new MainViewModel with default dataaccess and snippetbuilders
+        /// </summary>
+        public MainViewModel() : this(new DataAccess(), new SnippetBuilder()) { }
+
+        #endregion
+
+        #region ICommands
+
+        /// <summary>
+        /// Generate a code snippet
+        /// </summary>
+        public RelayCommand<object> GenerateSnippet
+            => new RelayCommand<object>(x => snippetBuilder.GenerateSnippet(
+                Title, Author, Description, Shortcut, Language, Code));
 
         #endregion
     }

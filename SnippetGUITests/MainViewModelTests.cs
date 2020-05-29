@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SnippetGUI.Data;
+using SnippetGUI.Model;
 using SnippetGUI.ViewModel;
 using System.IO;
 
@@ -16,7 +17,7 @@ namespace SnippetGUITests
             var dataAccess = new DataAccess(languages);
 
             // Act
-            var vm = new MainViewModel(dataAccess);
+            var vm = new MainViewModel(dataAccess, new SnippetBuilder());
 
             // Assert
             Assert.AreEqual("language 1", vm.Languages[0]);

@@ -149,6 +149,23 @@ namespace SnippetGUI.ViewModel
             }
         }
 
+        private string _saveLocation;
+        /// <summary>
+        /// Location to save the snippet
+        /// </summary>
+        public string SaveLocation
+        {
+            get => _saveLocation;
+            set
+            {
+                if (_saveLocation != value)
+                {
+                    _saveLocation = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         #endregion
 
         #region Constructors

@@ -1,7 +1,6 @@
 ﻿using SnippetGUI.Data;
 using SnippetGUI.Model;
 using System.Collections.ObjectModel;
-using System.Windows;
 
 namespace SnippetGUI.ViewModel
 {
@@ -133,6 +132,23 @@ namespace SnippetGUI.ViewModel
             }
         }
 
+        private string _snippet;
+        /// <summary>
+        /// The generated code snippet
+        /// </summary>
+        public string Snippet
+        {
+            get => _snippet;
+            set
+            {
+                if (_snippet != value)
+                {
+                    _snippet = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -166,8 +182,13 @@ namespace SnippetGUI.ViewModel
             => new RelayCommand<object>(x =>
             {
                 var snippetBuilder = new SnippetBuilder(Title, Author, Description, Shortcut, Language, Code, dataAccess);
-                snippetBuilder.GenerateSnippet();
+                Snippet = snippetBuilder.GenerateSnippet();
             });
+
+        /// <summary>
+        /// Save a snippet
+        /// </summary>
+        public RelayCommand<object> SaveSnippet { get; }
 
         #endregion
     }

@@ -13,8 +13,16 @@ namespace SnippetGUI.Data
         /// <returns> IList of available snippet languages </returns>
         IList<string> GetLanguages();
 
-        string GetReplacementMarker();
+        /// <summary>
+        /// Get the marker to replace properties in the template
+        /// </summary>
+        /// <returns> The marker to replace properties in a template </returns>
+        string GetReplaceMarker();
 
+        /// <summary>
+        /// Get the template for a code snippet
+        /// </summary>
+        /// <returns> The template for a code snippet </returns>
         string GetTemplate();
     }
 }

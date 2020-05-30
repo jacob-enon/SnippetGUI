@@ -165,7 +165,7 @@ namespace SnippetGUI.ViewModel
             => new RelayCommand<object>(x =>
             {
                 var snippetBuilder = new SnippetBuilder(Title, Author, Description, Shortcut, Language, Code, dataAccess);
-                MessageBox.Show(snippetBuilder.GenerateSnippet());
+                snippetBuilder.GenerateSnippet();
             });
 
         #endregion

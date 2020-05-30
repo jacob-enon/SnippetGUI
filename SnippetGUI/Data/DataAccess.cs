@@ -14,9 +14,11 @@ namespace SnippetGUI.Data
         /// <summary>
         /// Construct a new DataAccess
         /// </summary>
+        /// <param name="configLocation"> Location of the config file </param>
         public DataAccess(string configLocation = null)
         {
-            config = DeserializeJsonFile<Config>(configLocation ?? Path.Combine("Config", "config.json"));
+            config = DeserializeJsonFile<Config>(
+                configLocation ?? Path.Combine("Config", "config.json"));
         }
 
         /// <summary>
@@ -29,7 +31,7 @@ namespace SnippetGUI.Data
         /// Get the marker to replace properties in the template
         /// </summary>
         /// <returns> The marker to replace properties in a template </returns>
-        public string GetReplacementMarker() => config.ReplaceMarker;
+        public string GetReplaceMarker() => config.ReplaceMarker;
 
         /// <summary>
         /// Get the template for a code snippet

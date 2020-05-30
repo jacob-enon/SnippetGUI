@@ -11,7 +11,7 @@ namespace SnippetGUITests
         public void GetLanguages_ReturnsListOfLanguages()
         {
             // Arrange
-            var config = Path.Combine("test_data", "languages.json");
+            var config = Path.Combine("test_data", "config.json");
             var data = new DataAccess(config);
 
             // Act

@@ -1,0 +1,15 @@
+{
+  "Languages": [
+    "VB",
+    "CSharp",
+    "CPP",
+    "XAML",
+    "XML",
+    "JavaScript",
+    "TypeScript",
+    "SQL",
+    "HTML"
+  ],
+  "ReplaceMarker": "$",
+  "Template": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<CodeSnippets xmlns=\"http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet\">\n<CodeSnippet Format=\"1.0.0\">\n<Header>\n<Title>$title$</Title>\n<Author>$author$</Author>\n<Description>$description$</Description>\n<Shortcut>$shortcut$</Shortcut>\n</Header>\n<Snippet>\n<Code Language=\"$language$\">\n<![CDATA[$code$]]>\n</Code>\n</Snippet>\n</CodeSnippet>\n</CodeSnippets>\n"
+}

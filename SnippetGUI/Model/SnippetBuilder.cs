@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using SnippetGUI.Data;
 using System.IO;
 
 namespace SnippetGUI.Model
@@ -16,7 +16,7 @@ namespace SnippetGUI.Model
         private readonly string language;
         private readonly string code;
 
-        private readonly string templateLocation;
+        private readonly string configLocation;
 
         private string template;
         private string replacementMarker;
@@ -31,7 +31,7 @@ namespace SnippetGUI.Model
         /// <param name="language"> Language the snippet is in</param>
         /// <param name="code"> Code for the snippet </param>
         public SnippetBuilder(string title, string author, string description,
-            string shortcut, string language, string code, string templateLocation = null)
+            string shortcut, string language, string code, string configLocation = null)
         {
             this.title = title;
             this.author = author;
@@ -39,18 +39,37 @@ namespace SnippetGUI.Model
             this.shortcut = shortcut;
             this.language = language;
             this.code = code;
-            this.templateLocation = templateLocation ?? Path.Combine("Config", "snippet_template.json");
+            this.configLocation = configLocation ?? Path.Combine("Config", "snippet_template.json");
+        }
+
+        public SnippetBuilder(string title, string author, string description,
+            string shortcut, string language, string code, IDataAccess dataAccess)
+        {
+            this.title = title;
+            this.author = author;
+            this.description = description;
+            this.shortcut = shortcut;
+            this.language = language;
+            this.code = code;
+
+            template = dataAccess.GetTemplate();
+            replacementMarker = dataAccess.GetReplacementMarker();
         }
 
         /// <summary>
         /// Generate a code snippet
         /// </summary>
         /// <returns> A Code Snippet </returns>
-        public string GenerateSnippet()
+        /// <param name="dataAccess"> Data access for generating snippet template </param>
+        public string GenerateSnippet(IDataAccess dataAccess = null)
         {
-            dynamic templateData = JsonConvert.DeserializeObject(File.ReadAllText(templateLocation));
-            replacementMarker = templateData.replace_marker;
-            template = templateData.template;
+            if (dataAccess == null)
+            {
+                dataAccess = new DataAccess(configLocation);
+            }
+
+            replacementMarker ??= dataAccess.GetReplacementMarker();
+            template ??= dataAccess.GetTemplate();
 
             return FillTemplate();
         }

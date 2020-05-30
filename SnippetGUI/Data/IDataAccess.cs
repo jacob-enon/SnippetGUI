@@ -12,5 +12,9 @@ namespace SnippetGUI.Data
         /// </summary>
         /// <returns> IList of available snippet languages </returns>
         IList<string> GetLanguages();
+
+        string GetReplacementMarker();
+
+        string GetTemplate();
     }
 }

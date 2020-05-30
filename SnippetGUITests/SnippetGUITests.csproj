@@ -18,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="test_data\config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="test_data\languages.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

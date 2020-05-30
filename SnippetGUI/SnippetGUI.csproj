@@ -21,6 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Config\config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Config\snippet_template.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

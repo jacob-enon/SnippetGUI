@@ -9,22 +9,33 @@ namespace SnippetGUI.Data
     /// </summary>
     public class DataAccess : IDataAccess
     {
-        private readonly string languages;
+        private readonly Config config;
 
         /// <summary>
         /// Construct a new DataAccess
         /// </summary>
-        /// <param name="languages"> Config file for available snippet languages </param>
-        public DataAccess(string languages = null)
+        public DataAccess(string configLocation = null)
         {
-            this.languages = languages ?? Path.Combine("Config", "languages.json");
+            config = DeserializeJsonFile<Config>(configLocation ?? Path.Combine("Config", "config.json"));
         }
 
         /// <summary>
         /// Get all available snippet languages
         /// </summary>
         /// <returns> IList of available languages </returns>
-        public IList<string> GetLanguages() => DeserializeJsonFile<List<string>>(languages);
+        public IList<string> GetLanguages() => config.Languages;
+
+        /// <summary>
+        /// Get the marker to replace properties in the template
+        /// </summary>
+        /// <returns> The marker to replace properties in a template </returns>
+        public string GetReplacementMarker() => config.ReplaceMarker;
+
+        /// <summary>
+        /// Get the template for a code snippet
+        /// </summary>
+        /// <returns> The template for a code snippet </returns>
+        public string GetTemplate() => config.Template;
 
         /// <summary>
         /// Deserialize a JSON file

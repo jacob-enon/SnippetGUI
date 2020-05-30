@@ -1,0 +1,8 @@
+{
+  "languages": [
+    "language 1",
+    "language 2"
+  ],
+  "replaceMarker": "$",
+  "template": "$title$$author$$description$$shortcut$$language$$code$"
+}

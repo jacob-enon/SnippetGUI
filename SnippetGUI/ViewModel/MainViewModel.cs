@@ -1,8 +1,6 @@
 ﻿using SnippetGUI.Data;
 using SnippetGUI.Model;
-using System;
 using System.Collections.ObjectModel;
-using System.Windows;
 
 namespace SnippetGUI.ViewModel
 {

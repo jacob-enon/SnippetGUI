@@ -1,4 +1,6 @@
-﻿namespace SnippetGUI.Model
+﻿using SnippetGUI.Data;
+
+namespace SnippetGUI.Model
 {
     /// <summary>
     /// Generates code snippets
@@ -8,14 +10,7 @@
         /// <summary>
         ///  Generate a code snippet
         /// </summary>
-        /// <param name="title"> Title of the snippet </param>
-        /// <param name="author"> Author of the snippet </param>
-        /// <param name="description"> Description of the snippet </param>
-        /// <param name="shortcut"> Shortcut to access the snippet </param>
-        /// <param name="language"> Language the snippet is in</param>
-        /// <param name="code"> Code for the snippet </param>
         /// <returns> A Code Snippet </returns>
-        string GenerateSnippet(string title, string author, string description,
-            string shortcut, string language, string code);
+        string GenerateSnippet();
     }
 }

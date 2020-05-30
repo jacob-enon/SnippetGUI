@@ -1,6 +1,7 @@
 ﻿using SnippetGUI.Data;
 using SnippetGUI.Model;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace SnippetGUI.ViewModel
 {
@@ -12,7 +13,6 @@ namespace SnippetGUI.ViewModel
         #region Properties
 
         private readonly IDataAccess dataAccess;
-        private readonly ISnippetBuilder snippetBuilder;
 
         private string _title;
         /// <summary>
@@ -142,10 +142,9 @@ namespace SnippetGUI.ViewModel
         /// </summary>
         /// <param name="dataAccess"> Data Access for config files </param>
         /// <param name="snippetBuilder"> Snippet Builder to generate snippet </param>
-        public MainViewModel(IDataAccess dataAccess, ISnippetBuilder snippetBuilder)
+        public MainViewModel(IDataAccess dataAccess)
         {
             this.dataAccess = dataAccess ?? new DataAccess();
-            this.snippetBuilder = snippetBuilder ?? new SnippetBuilder();
 
             Languages = new ObservableCollection<string>(this.dataAccess.GetLanguages());
         }
@@ -153,7 +152,8 @@ namespace SnippetGUI.ViewModel
         /// <summary>
         /// Construct a new MainViewModel with default dataaccess and snippetbuilders
         /// </summary>
-        public MainViewModel() : this(new DataAccess(), new SnippetBuilder()) { }
+        /// <remarks> can't be done w/ defaults as it throws null reference on InitializeComponent() </remarks>
+        public MainViewModel() : this(new DataAccess()) { }
 
         #endregion
 
@@ -163,8 +163,11 @@ namespace SnippetGUI.ViewModel
         /// Generate a code snippet
         /// </summary>
         public RelayCommand<object> GenerateSnippet
-            => new RelayCommand<object>(x => snippetBuilder.GenerateSnippet(
-                Title, Author, Description, Shortcut, Language, Code));
+            => new RelayCommand<object>(x =>
+            {
+                var snippetBuilder = new SnippetBuilder(Title, Author, Description, Shortcut, Language, Code, dataAccess);
+                snippetBuilder.GenerateSnippet();
+            });
 
         #endregion
     }

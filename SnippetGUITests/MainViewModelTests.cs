@@ -13,11 +13,11 @@ namespace SnippetGUITests
         public void Ctor_GetsListOfAvailableLanguages()
         {
             // Arrange
-            var languages = Path.Combine("test_data", "languages.json");
+            var languages = Path.Combine("test_data", "config.json");
             var dataAccess = new DataAccess(languages);
 
             // Act
-            var vm = new MainViewModel(dataAccess, new SnippetBuilder());
+            var vm = new MainViewModel(dataAccess);
 
             // Assert
             Assert.AreEqual("language 1", vm.Languages[0]);

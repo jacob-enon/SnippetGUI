@@ -1,4 +1,6 @@
-﻿namespace SnippetGUI.Model
+﻿using SnippetGUI.Data;
+
+namespace SnippetGUI.Model
 {
     /// <summary>
     /// Generates code snippets

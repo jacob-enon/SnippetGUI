@@ -164,7 +164,7 @@ namespace SnippetGUI.ViewModel
         public RelayCommand<object> GenerateSnippet
             => new RelayCommand<object>(x =>
             {
-                var snippetBuilder = new SnippetBuilder(Title, Author, Description, Shortcut, Language, Code);
+                var snippetBuilder = new SnippetBuilder(Title, Author, Description, Shortcut, Language, Code, dataAccess);
                 snippetBuilder.GenerateSnippet();
             });
 

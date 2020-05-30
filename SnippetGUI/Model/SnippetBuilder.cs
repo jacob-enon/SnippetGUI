@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using SnippetGUI.Data;
 using System.IO;
 
 namespace SnippetGUI.Model
@@ -16,22 +16,11 @@ namespace SnippetGUI.Model
         private readonly string language;
         private readonly string code;
 
-        private readonly string templateLocation;
+        private readonly string template;
+        private readonly string replaceMarker;
 
-        private string template;
-        private string replacementMarker;
-
-        /// <summary>
-        /// Construct a new SnippetBuilder
-        /// </summary>
-        /// <param name="title"> Title of the snippet </param>
-        /// <param name="author"> Author of the snippet </param>
-        /// <param name="description"> Description of the snippet </param>
-        /// <param name="shortcut"> Shortcut to access the snippet </param>
-        /// <param name="language"> Language the snippet is in</param>
-        /// <param name="code"> Code for the snippet </param>
         public SnippetBuilder(string title, string author, string description,
-            string shortcut, string language, string code, string templateLocation = null)
+            string shortcut, string language, string code, IDataAccess dataAccess)
         {
             this.title = title;
             this.author = author;
@@ -39,19 +28,18 @@ namespace SnippetGUI.Model
             this.shortcut = shortcut;
             this.language = language;
             this.code = code;
-            this.templateLocation = templateLocation ?? Path.Combine("Config", "snippet_template.json");
+
+            template = dataAccess.GetTemplate();
+            replaceMarker = dataAccess.GetReplaceMarker();
         }
 
         /// <summary>
         /// Generate a code snippet
         /// </summary>
         /// <returns> A Code Snippet </returns>
+        /// <param name="dataAccess"> Data access for generating snippet template </param>
         public string GenerateSnippet()
         {
-            dynamic templateData = JsonConvert.DeserializeObject(File.ReadAllText(templateLocation));
-            replacementMarker = templateData.replace_marker;
-            template = templateData.template;
-
             return FillTemplate();
         }
 
@@ -77,6 +65,6 @@ namespace SnippetGUI.Model
         /// </summary>
         /// <param name="value"> Value to return marker </param>
         /// <returns> Value surrounded by markers </returns>
-        private string Marker(string value) => $"{replacementMarker}{value}{replacementMarker}";
+        private string Marker(string value) => $"{replaceMarker}{value}{replaceMarker}";
     }
 }

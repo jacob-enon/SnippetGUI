@@ -7,21 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Config\languages.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Config\languages.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Config\snippet_template.json">
+    <None Update="Config\config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

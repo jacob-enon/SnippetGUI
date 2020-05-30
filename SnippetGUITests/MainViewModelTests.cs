@@ -13,7 +13,7 @@ namespace SnippetGUITests
         public void Ctor_GetsListOfAvailableLanguages()
         {
             // Arrange
-            var languages = Path.Combine("test_data", "languages.json");
+            var languages = Path.Combine("test_data", "config.json");
             var dataAccess = new DataAccess(languages);
 
             // Act

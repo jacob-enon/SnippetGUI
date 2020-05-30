@@ -152,6 +152,7 @@ namespace SnippetGUI.ViewModel
         /// <summary>
         /// Construct a new MainViewModel with default dataaccess and snippetbuilders
         /// </summary>
+        /// <remarks> can't be done w/ defaults as it throws null reference on InitializeComponent() </remarks>
         public MainViewModel() : this(new DataAccess()) { }
 
         #endregion

@@ -9,6 +9,8 @@ namespace SnippetGUI.Model
     /// <remarks> Uses XML format </remarks>
     public class SnippetBuilder : ISnippetBuilder
     {
+        #region Properties
+
         private readonly string title;
         private readonly string author;
         private readonly string description;
@@ -19,8 +21,10 @@ namespace SnippetGUI.Model
         private readonly string template;
         private readonly string replaceMarker;
 
+        #endregion
+
         public SnippetBuilder(string title, string author, string description,
-            string shortcut, string language, string code, IDataAccess dataAccess)
+            string shortcut, string language, string code, IDataAccess dataAccess = null)
         {
             this.title = title;
             this.author = author;
@@ -29,9 +33,13 @@ namespace SnippetGUI.Model
             this.language = language;
             this.code = code;
 
+            dataAccess ??= new DataAccess();
+
             template = dataAccess.GetTemplate();
             replaceMarker = dataAccess.GetReplaceMarker();
         }
+
+        #region Methods
 
         /// <summary>
         /// Generate a code snippet
@@ -40,15 +48,7 @@ namespace SnippetGUI.Model
         /// <param name="dataAccess"> Data access for generating snippet template </param>
         public string GenerateSnippet()
         {
-            return FillTemplate();
-        }
-
-        /// <summary>
-        /// Fill a snippet template
-        /// </summary>
-        private string FillTemplate()
-        {
-            var snippet = template;
+            var snippet = template; //as it would be wrong to edit the template as it's not a template anymore
 
             snippet = snippet.Replace(Marker("title"), title);
             snippet = snippet.Replace(Marker("author"), author);
@@ -63,8 +63,10 @@ namespace SnippetGUI.Model
         /// <summary>
         /// Return marker for template property
         /// </summary>
-        /// <param name="value"> Value to return marker </param>
+        /// <param name="value"> Value to surround with markers </param>
         /// <returns> Value surrounded by markers </returns>
         private string Marker(string value) => $"{replaceMarker}{value}{replaceMarker}";
+
+        #endregion
     }
 }

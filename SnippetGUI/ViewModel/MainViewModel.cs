@@ -205,8 +205,19 @@ namespace SnippetGUI.ViewModel
         /// <summary>
         /// Save a snippet
         /// </summary>
-        public RelayCommand<object> SaveSnippet { get; }
+        public RelayCommand<object> SaveSnippet
+            => new RelayCommand<object>(x =>
+            {
+                var snippetFile = new SnippetFile(SaveLocation, Snippet);
+                snippetFile.Save();
+            }, x => CanSaveFile());
 
         #endregion
+
+        /// <summary>
+        /// Determines whether a snippet file can be saved
+        /// </summary>
+        /// <returns> True if the snippet can be saved </returns>
+        private bool CanSaveFile() => !(string.IsNullOrEmpty(SaveLocation) || string.IsNullOrEmpty(Snippet));
     }
 }

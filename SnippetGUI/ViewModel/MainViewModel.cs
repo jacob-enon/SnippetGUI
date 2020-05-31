@@ -202,7 +202,7 @@ namespace SnippetGUI.ViewModel
         /// Save a snippet
         /// </summary>
         public RelayCommand<object> SaveSnippetCmd
-            => new RelayCommand<object>(x => SaveSnippet(), x => CanSaveFile());
+            => new RelayCommand<object>(x => SaveSnippet(), x => CanSaveSnippet());
 
         #endregion
 
@@ -211,7 +211,8 @@ namespace SnippetGUI.ViewModel
         /// </summary>
         private void GenerateSnippet()
         {
-            var snippetBuilder = new SnippetBuilder(Title, Author, Description, Shortcut, Language, Code, dataAccess);
+            var snippetBuilder = new SnippetBuilder(Title, Author,
+                Description, Shortcut, Language, Code, dataAccess);
             Snippet = snippetBuilder.GenerateSnippet();
         }
 
@@ -228,6 +229,6 @@ namespace SnippetGUI.ViewModel
         /// Determines whether a snippet file can be saved
         /// </summary>
         /// <returns> True if the snippet can be saved </returns>
-        private bool CanSaveFile() => !(string.IsNullOrEmpty(SaveLocation) || string.IsNullOrEmpty(Snippet));
+        private bool CanSaveSnippet() => !(string.IsNullOrEmpty(SaveLocation) || string.IsNullOrEmpty(Snippet));
     }
 }

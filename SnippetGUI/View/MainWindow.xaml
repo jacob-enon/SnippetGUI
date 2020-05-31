@@ -90,7 +90,7 @@
 
         <Button Grid.Column="4" Grid.Row="5"
                 Content="Generate Snippet"
-                Command="{Binding GenerateSnippet}"/>
+                Command="{Binding GenerateSnippetCmd}"/>
 
         <Grid Grid.Column="1" Grid.Row="6"
               Grid.ColumnSpan="4">
@@ -133,7 +133,7 @@
 
             <Button Grid.Column="3" Grid.Row="1"
                     Content="Confirm"
-                    Command="{Binding SaveSnippet}" Grid.ColumnSpan="2" />
+                    Command="{Binding SaveSnippetCmd}" Grid.ColumnSpan="2" />
         </Grid>
     </Grid>
 </Window>

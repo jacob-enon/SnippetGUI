@@ -9,6 +9,7 @@ namespace SnippetGUI.Data
     public class SnippetFile : ISnippetFile
     {
         private const string extension = ".snippet";
+        private readonly string defaultName = $"snippet{extension}";
 
         /// <summary>
         /// Location of the snippet file
@@ -51,7 +52,7 @@ namespace SnippetGUI.Data
             if (Directory.Exists(location))
             {
                 // If path is a dir, use a default file name in the dir
-                fileName.Append(Path.Combine(location, $"snippet{extension}"));
+                fileName.Append(Path.Combine(location, defaultName));
             }
             else
             {

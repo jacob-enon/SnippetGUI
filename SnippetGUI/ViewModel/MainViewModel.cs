@@ -149,6 +149,23 @@ namespace SnippetGUI.ViewModel
             }
         }
 
+        private string _saveLocation;
+        /// <summary>
+        /// Location to save the snippet
+        /// </summary>
+        public string SaveLocation
+        {
+            get => _saveLocation;
+            set
+            {
+                if (_saveLocation != value)
+                {
+                    _saveLocation = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         #endregion
 
         #region Constructors
@@ -178,18 +195,40 @@ namespace SnippetGUI.ViewModel
         /// <summary>
         /// Generate a code snippet
         /// </summary>
-        public RelayCommand<object> GenerateSnippet
-            => new RelayCommand<object>(x =>
-            {
-                var snippetBuilder = new SnippetBuilder(Title, Author, Description, Shortcut, Language, Code, dataAccess);
-                Snippet = snippetBuilder.GenerateSnippet();
-            });
+        public RelayCommand<object> GenerateSnippetCmd
+            => new RelayCommand<object>(x => GenerateSnippet());
 
         /// <summary>
         /// Save a snippet
         /// </summary>
-        public RelayCommand<object> SaveSnippet { get; }
+        public RelayCommand<object> SaveSnippetCmd
+            => new RelayCommand<object>(x => SaveSnippet(), x => CanSaveSnippet());
 
         #endregion
+
+        /// <summary>
+        /// Generate a snippet
+        /// </summary>
+        private void GenerateSnippet()
+        {
+            var snippetBuilder = new SnippetBuilder(Title, Author,
+                Description, Shortcut, Language, Code, dataAccess);
+            Snippet = snippetBuilder.GenerateSnippet();
+        }
+
+        /// <summary>
+        /// Save a snippet to a file
+        /// </summary>
+        private void SaveSnippet()
+        {
+            var snippetFile = new SnippetFile(SaveLocation, Snippet);
+            snippetFile.Save();
+        }
+
+        /// <summary>
+        /// Determines whether a snippet file can be saved
+        /// </summary>
+        /// <returns> True if the snippet can be saved </returns>
+        private bool CanSaveSnippet() => !(string.IsNullOrEmpty(SaveLocation) || string.IsNullOrEmpty(Snippet));
     }
 }

@@ -6,10 +6,10 @@ using System.IO;
 namespace SnippetGUITests
 {
     [TestClass]
-    public class ModelTests
+    public class SnippetBuilderTests
     {
         [TestMethod]
-        public void SnippetBuilder_GenerateSnippet_ReplacesTemplateProperties()
+        public void GenerateSnippet_ReplacesTemplateProperties()
         {
             // Arrange
             var title = "a";

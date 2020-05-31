@@ -195,24 +195,34 @@ namespace SnippetGUI.ViewModel
         /// <summary>
         /// Generate a code snippet
         /// </summary>
-        public RelayCommand<object> GenerateSnippet
-            => new RelayCommand<object>(x =>
-            {
-                var snippetBuilder = new SnippetBuilder(Title, Author, Description, Shortcut, Language, Code, dataAccess);
-                Snippet = snippetBuilder.GenerateSnippet();
-            });
+        public RelayCommand<object> GenerateSnippetCmd
+            => new RelayCommand<object>(x => GenerateSnippet());
 
         /// <summary>
         /// Save a snippet
         /// </summary>
-        public RelayCommand<object> SaveSnippet
-            => new RelayCommand<object>(x =>
-            {
-                var snippetFile = new SnippetFile(SaveLocation, Snippet);
-                snippetFile.Save();
-            }, x => CanSaveFile());
+        public RelayCommand<object> SaveSnippetCmd
+            => new RelayCommand<object>(x => SaveSnippet(), x => CanSaveFile());
 
         #endregion
+
+        /// <summary>
+        /// Generate a snippet
+        /// </summary>
+        private void GenerateSnippet()
+        {
+            var snippetBuilder = new SnippetBuilder(Title, Author, Description, Shortcut, Language, Code, dataAccess);
+            Snippet = snippetBuilder.GenerateSnippet();
+        }
+
+        /// <summary>
+        /// Save a snippet to a file
+        /// </summary>
+        private void SaveSnippet()
+        {
+            var snippetFile = new SnippetFile(SaveLocation, Snippet);
+            snippetFile.Save();
+        }
 
         /// <summary>
         /// Determines whether a snippet file can be saved

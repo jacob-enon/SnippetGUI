@@ -7,13 +7,11 @@ namespace SnippetGUITests
     [TestClass]
     public class SnippetFileTests
     {
-        const string TestData = "test_data";
-
         [TestMethod]
         public void Ctor_WithSnippetFile_UsesFileAsLocation()
         {
             // Arrange
-            var location = Path.Combine(TestData, "snippet.snippet");
+            var location = Path.Combine("test_data", "snippet.snippet");
 
             // Act
             var snippetFile = new SnippetFile(location, string.Empty);
@@ -23,9 +21,9 @@ namespace SnippetGUITests
         }
 
         [TestMethod]
-        [DataRow("snippet")]
-        [DataRow("snippet.txt")]
-        [DataRow("this_file_does_not_exist.ppt")]
+        [DataRow("snippet")] // Just given a file name
+        [DataRow("snippet.txt")] // Given a file name w/ incorrect extension
+        [DataRow("this_file_does_not_exist.ppt")] // Using a non existant file
         public void Ctor_WithNonSnippetFile_UsesFileWithSnippetExtension(string file)
         {
             // Arrange

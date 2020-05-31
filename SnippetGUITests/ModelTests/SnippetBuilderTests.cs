@@ -1,14 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SnippetGUI.Data;
+using SnippetGUI.Model;
 using System.IO;
 
 namespace SnippetGUITests
 {
     [TestClass]
-    public class SnippetBuilder
+    public class SnippetBuilderTests
     {
         [TestMethod]
-        public void SnippetBuilder_GenerateSnippet_ReplacesTemplateProperties()
+        public void GenerateSnippet_ReplacesTemplateProperties()
         {
             // Arrange
             var title = "a";
@@ -18,7 +19,7 @@ namespace SnippetGUITests
             var language = "e";
             var code = "f";
             var templateLocation = Path.Combine("test_data", "config.json");
-            var builder = new SnippetGUI.Model.SnippetBuilder(title, author, description, shortcut, language, code, new DataAccess(templateLocation));
+            var builder = new SnippetBuilder(title, author, description, shortcut, language, code, new DataAccess(templateLocation));
 
             // Act
             var snippet = builder.GenerateSnippet();

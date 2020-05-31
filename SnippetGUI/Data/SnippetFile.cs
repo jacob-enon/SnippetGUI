@@ -50,14 +50,17 @@ namespace SnippetGUI.Data
 
             if (Directory.Exists(location))
             {
+                // If path is a dir, use a default file name in the dir
                 fileName.Append(Path.Combine(location, $"snippet{extension}"));
             }
             else
             {
+                // Else, this is a file name
                 fileName.Append(location);
 
                 if (!location.EndsWith(extension))
                 {
+                    // All snippets must have the .snippet extension
                     fileName.Append(extension);
                 }
             }

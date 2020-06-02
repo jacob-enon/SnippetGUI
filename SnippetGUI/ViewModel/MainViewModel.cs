@@ -196,7 +196,8 @@ namespace SnippetGUI.ViewModel
         /// Generate a code snippet
         /// </summary>
         public RelayCommand<object> GenerateSnippetCmd
-            => new RelayCommand<object>(x => GenerateSnippet());
+            => new RelayCommand<object>(x => GenerateSnippet(),
+                x => SnippetBuilder.ValidSnippet(Languages, Language, Code));
 
         /// <summary>
         /// Save a snippet

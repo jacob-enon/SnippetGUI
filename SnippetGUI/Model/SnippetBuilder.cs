@@ -1,4 +1,5 @@
 ﻿using SnippetGUI.Data;
+using System.Collections.Generic;
 using System.IO;
 
 namespace SnippetGUI.Model
@@ -40,6 +41,22 @@ namespace SnippetGUI.Model
         }
 
         #region Methods
+
+        /// <summary>
+        /// Determines if a snippet is valid to generate
+        /// </summary>
+        /// <param name="availableLanguages"> Available languages for a snippet </param>
+        /// <param name="language"> Language the snippet is in </param>
+        /// <param name="code"> Code for the snippet </param>
+        /// <returns> True if a snippet is valid </returns>
+        /// <remarks>
+        /// A snippet must have code to insert,
+        /// and the language must be one available in this configuration.
+        /// There are no limitations on Title, Author, Shortcut etc. as these are optional
+        ///     fields in VS
+        /// </remarks>
+        public static bool ValidSnippet(IList<string> availableLanguages, string language, string code) 
+            => !string.IsNullOrEmpty(code) && (availableLanguages?.Contains(language) ?? false);
 
         /// <summary>
         /// Generate a code snippet

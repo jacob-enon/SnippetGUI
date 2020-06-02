@@ -1,4 +1,5 @@
 ﻿using SnippetGUI.Data;
+using System.Collections.Generic;
 using System.IO;
 
 namespace SnippetGUI.Model
@@ -40,6 +41,16 @@ namespace SnippetGUI.Model
         }
 
         #region Methods
+
+        /// <summary>
+        /// Determines if a snippet is valid to generate
+        /// </summary>
+        /// <param name="availableLanguages"> Available languages for a snippet </param>
+        /// <param name="language"> Language the snippet is in </param>
+        /// <param name="code"> Code for the snippet </param>
+        /// <returns></returns>
+        public static bool ValidSnippet(IList<string> availableLanguages, string language, string code) 
+            => !string.IsNullOrEmpty(code) && availableLanguages.Contains(language);
 
         /// <summary>
         /// Generate a code snippet

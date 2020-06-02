@@ -50,7 +50,7 @@ namespace SnippetGUI.Model
         /// <param name="code"> Code for the snippet </param>
         /// <returns></returns>
         public static bool ValidSnippet(IList<string> availableLanguages, string language, string code) 
-            => !string.IsNullOrEmpty(code) && availableLanguages.Contains(language);
+            => !string.IsNullOrEmpty(code) && (availableLanguages?.Contains(language) ?? false);
 
         /// <summary>
         /// Generate a code snippet

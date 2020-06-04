@@ -33,11 +33,203 @@
             <Setter Property="Padding" Value="4" />
             <Setter Property="FontWeight" Value="Medium" />
         </Style>
+        <Style TargetType="Border">
+            <Setter Property="BorderBrush" Value="Gray" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="3" />
+        </Style>
     </Window.Resources>
     <Window.DataContext>
         <viewmodel:MainViewModel />
     </Window.DataContext>
+
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="1" Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Separator Grid.Column="0" Grid.Row="0"
+                       Grid.ColumnSpan="2" />
+                <TextBlock Grid.Column="0" Grid.Row="1"
+                Text="Snippet Code" 
+                           ToolTip="The code to be inserted in the snippet"/>
+                <Separator Grid.Column="0" Grid.Row="2"
+                       Grid.ColumnSpan="2" />
+
+                <Label Grid.Column="0" Grid.Row="3"
+                   Content="Code" />
+                <TextBox Grid.Column="1" Grid.Row="3"
+                     Style="{StaticResource TextBoxStyle}"
+                     Text="{Binding Code}" />
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="3" Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <Separator Grid.Column="0" Grid.Row="0"
+                       Grid.ColumnSpan="4" />
+                <TextBlock Grid.Column="0" Grid.Row="1"
+                       Text="Fields" />
+                <Separator Grid.Column="0" Grid.Row="2"
+                       Grid.ColumnSpan="4" />
+
+                <Label Grid.Column="0" Grid.Row="3"
+                   Content="Title" />
+                <TextBox Grid.Column="1" Grid.Row="3"
+                     Style="{StaticResource SingleLineTextBoxStyle}"
+                     Text="{Binding Title}" />
+
+                <Label Grid.Column="0" Grid.Row="4"
+                   Content="Author" />
+                <TextBox Grid.Column="1" Grid.Row="4"
+                     Style="{StaticResource SingleLineTextBoxStyle}"
+                     Text="{Binding Author}" />
+
+                <Label Grid.Column="0" Grid.Row="5"
+                   Content="Shortcut" />
+                <TextBox Grid.Column="1" Grid.Row="5"
+                     Style="{StaticResource SingleLineTextBoxStyle}"
+                     Text="{Binding Shortcut}" />
+
+                <Label Grid.Column="0" Grid.Row="6"
+                   Content="Language" />
+                <ComboBox Grid.Column="1" Grid.Row="6"
+                      ItemsSource="{Binding Languages}"
+                     SelectedItem="{Binding Language}" />
+
+                <Label Grid.Column="2" Grid.Row="3"
+                   Content="Description" />
+                <TextBox Grid.Column="3" Grid.Row="3"
+                     Grid.RowSpan="3"
+                     Style="{StaticResource TextBoxStyle}"
+                     Text="{Binding Description}" />
+
+                <Button Grid.Column="2" Grid.Row="6"
+                    Grid.ColumnSpan="2"
+                    Content="Generate"
+                    Command="{Binding GenerateSnippetCmd}" />
+            </Grid>
+
+        </Border>
+
+        <Border Grid.Column="1" Grid.Row="3">
+            <Grid Grid.Column="1" Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Separator Grid.Column="0" Grid.Row="0"
+                       Grid.ColumnSpan="3" />
+                <TextBlock Grid.Column="0" Grid.Row="1"
+                       Text="Declarations" />
+                <Separator Grid.Column="0" Grid.Row="2"
+                       Grid.ColumnSpan="3" />
+
+                <Label Grid.Column="0" Grid.Row="3"
+                   Content="ID" />
+                <TextBox Grid.Column="1" Grid.Row="3"
+                     Style="{StaticResource SingleLineTextBoxStyle}" />
+
+                <Label Grid.Column="0" Grid.Row="4"
+                   Content="Default" />
+                <TextBox Grid.Column="1" Grid.Row="4"
+                     Style="{StaticResource SingleLineTextBoxStyle}" />
+
+                <Label Grid.Column="0" Grid.Row="5"
+                   Content="Tool Tip" />
+                <TextBox Grid.Column="1" Grid.Row="5"
+                     Style="{StaticResource SingleLineTextBoxStyle}" />
+
+                <Separator Grid.Column="0" Grid.Row="6"
+                           Grid.ColumnSpan="3"/>
+                <TextBlock Grid.Column="0" Grid.Row="7"
+                       Text ="Current Declarations" />
+                <Separator Grid.Column="0" Grid.Row="8"
+                           Grid.ColumnSpan="3"/>
+
+                <ListView Grid.Column="0" Grid.Row="9"
+                  ItemsSource="{Binding Declarations}"
+                  SelectedItem="{Binding SelectedDeclaration}">
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="True"
+                          ColumnHeaderToolTip="Declarations">
+                            <GridViewColumn Header="ID"
+                                    DisplayMemberBinding="{Binding Path=ID}" />
+                            <GridViewColumn Header="Default Value"
+                                    DisplayMemberBinding="{Binding Path=DefaultValue}" />
+                            <GridViewColumn Header="Tool Tip"
+                                    DisplayMemberBinding="{Binding Path=ToolTip}" />
+
+                        </GridView>
+                    </ListView.View>
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Delete"
+                              Command="{Binding DeleteDeclaration}" />
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                </ListView>
+            </Grid>
+
+        </Border>
+
+    </Grid>
+
+    <!--<Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
             <ColumnDefinition Width="auto"/>
@@ -162,5 +354,5 @@
                     VerticalAlignment="Top"
                     Command="{Binding SaveSnippetCmd}"  />
         </Grid>
-    </Grid>
+    </Grid>-->
 </mah:MetroWindow>

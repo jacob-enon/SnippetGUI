@@ -218,6 +218,7 @@
 
                 <Button Grid.Column="2" Grid.Row="5"
                         Content="Add"
+                        Command="{Binding NewDeclarationCmd}"
                         ToolTip="Add this declaration"/>
 
                 <Separator Grid.Column="0" Grid.Row="6"
@@ -231,7 +232,7 @@
                 <ListView Grid.Column="0" Grid.Row="9"
                           Grid.ColumnSpan="3"
                   ItemsSource="{Binding Declarations}"
-                  SelectedItem="{Binding SelectedDeclaration}">
+                  SelectedItem="{Binding Declaration}">
                     <ListView.View>
                         <GridView AllowsColumnReorder="True"
                           ColumnHeaderToolTip="Declarations">
@@ -247,7 +248,7 @@
                     <ListView.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Delete"
-                              Command="{Binding DeleteDeclaration}" />
+                              Command="{Binding DeleteDeclarationCmd}" />
                         </ContextMenu>
                     </ListView.ContextMenu>
                 </ListView>

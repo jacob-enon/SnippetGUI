@@ -75,8 +75,8 @@
                 <Separator Grid.Column="0" Grid.Row="0"
                        Grid.ColumnSpan="2" />
                 <TextBlock Grid.Column="0" Grid.Row="1"
-                Text="Snippet Code" 
-                           ToolTip="The code to be inserted in the snippet"/>
+                       Text="Snippet Code" 
+                       ToolTip="The code to be inserted in the snippet"/>
                 <Separator Grid.Column="0" Grid.Row="2"
                        Grid.ColumnSpan="2" />
 
@@ -110,33 +110,38 @@
                 <Separator Grid.Column="0" Grid.Row="0"
                        Grid.ColumnSpan="4" />
                 <TextBlock Grid.Column="0" Grid.Row="1"
-                       Text="Fields" />
+                       Text="Fields"
+                           ToolTip="Fields that give VS more information when importing your snippet"/>
                 <Separator Grid.Column="0" Grid.Row="2"
                        Grid.ColumnSpan="4" />
 
                 <Label Grid.Column="0" Grid.Row="3"
-                   Content="Title" />
+                   Content="Title" 
+                       ToolTip="A name for your snippet to identify it"/>
                 <TextBox Grid.Column="1" Grid.Row="3"
                      Style="{StaticResource SingleLineTextBoxStyle}"
                      Text="{Binding Title,
                         UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Column="0" Grid.Row="4"
-                   Content="Author" />
+                   Content="Author"
+                       ToolTip="To identify who made the snippet"/>
                 <TextBox Grid.Column="1" Grid.Row="4"
                      Style="{StaticResource SingleLineTextBoxStyle}"
                      Text="{Binding Author,
                         UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Column="0" Grid.Row="5"
-                   Content="Shortcut" />
+                   Content="Shortcut"
+                       ToolTip="The characters to access the snippet"/>
                 <TextBox Grid.Column="1" Grid.Row="5"
                      Style="{StaticResource SingleLineTextBoxStyle}"
                      Text="{Binding Shortcut,
                         UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Column="0" Grid.Row="6"
-                   Content="Language" />
+                   Content="Language"
+                       ToolTip="The programming language it's written in"/>
                 <ComboBox Grid.Column="1" Grid.Row="6"
                       ItemsSource="{Binding Languages}"
                      SelectedItem="{Binding Language}" />
@@ -147,10 +152,12 @@
                      Grid.RowSpan="3"
                      Style="{StaticResource TextBoxStyle}"
                      Text="{Binding Description,
-                        UpdateSourceTrigger=PropertyChanged}" />
+                        UpdateSourceTrigger=PropertyChanged}" 
+                         ToolTip="Information about what your snippet does"/>
 
                 <Button Grid.Column="2" Grid.Row="6"
                     Grid.ColumnSpan="2"
+                        ToolTip="Generate a snippet"
                     Content="Generate"
                     Command="{Binding GenerateSnippetCmd}" />
             </Grid>
@@ -180,35 +187,44 @@
                 <Separator Grid.Column="0" Grid.Row="0"
                        Grid.ColumnSpan="3" />
                 <TextBlock Grid.Column="0" Grid.Row="1"
-                       Text="Declarations" />
+                       Text="Declarations"
+                           ToolTip="To add these to your code, put the ID surrounded by '$' like: $ID$"/>
                 <Separator Grid.Column="0" Grid.Row="2"
                        Grid.ColumnSpan="3" />
 
                 <Label Grid.Column="0" Grid.Row="3"
-                   Content="ID" />
+                   Content="ID"
+                       ToolTip="A unique ID to access the declaration"/>
                 <TextBox Grid.Column="1" Grid.Row="3"
                      Style="{StaticResource SingleLineTextBoxStyle}"
                          Text="{Binding DeclarationID,
                     UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Column="0" Grid.Row="4"
-                   Content="Default" />
+                   Content="Default"
+                       ToolTip="The default value that will be put in place of the ID"/>
                 <TextBox Grid.Column="1" Grid.Row="4"
                      Style="{StaticResource SingleLineTextBoxStyle}"
                          Text="{Binding DeclarationDefaultValue,
                     UpdateSourceTrigger=PropertyChanged}" />
 
                 <Label Grid.Column="0" Grid.Row="5"
-                   Content="Tool Tip" />
+                   Content="Tool Tip"
+                       ToolTip="Guidance on using the snippet"/>
                 <TextBox Grid.Column="1" Grid.Row="5"
                      Style="{StaticResource SingleLineTextBoxStyle}"
                          Text="{Binding DeclarationToolTip,
                     UpdateSourceTrigger=PropertyChanged}" />
 
+                <Button Grid.Column="2" Grid.Row="5"
+                        Content="Add"
+                        ToolTip="Add this declaration"/>
+
                 <Separator Grid.Column="0" Grid.Row="6"
                            Grid.ColumnSpan="3"/>
                 <TextBlock Grid.Column="0" Grid.Row="7"
-                       Text ="Current Declarations" />
+                       Text ="Current Declarations"
+                           ToolTip="Current declarations. Right click for options such as delete."/>
                 <Separator Grid.Column="0" Grid.Row="8"
                            Grid.ColumnSpan="3"/>
 
@@ -262,7 +278,8 @@
                            Grid.ColumnSpan="3" />
 
                 <Label Grid.Column="0" Grid.Row="3"
-                       Content="Snippet" />
+                       Content="Snippet"
+                       ToolTip="The snippet markup. Feel free to make changes."/>
                 <TextBox Grid.Column="1" Grid.Row="3"
                          Style="{StaticResource TextBoxStyle}"
                          Text="{Binding Snippet,
@@ -270,7 +287,8 @@
 
                 <Label Grid.Column="0" Grid.Row="3"
                        VerticalAlignment="Bottom"
-                       Grid.RowSpan="2">
+                       Grid.RowSpan="2"
+                       ToolTip="Directory or file to save the .snippet file">
                     <Label.Content>
                         <TextBlock>
                             <Run Text="Save" /><LineBreak />
@@ -284,6 +302,7 @@
                             UpdateSourceTrigger=PropertyChanged}" />
 
                 <Button Grid.Column="2" Grid.Row="4"
+                        ToolTip="Save the snippet to the given location"
                         Content="Confirm"
                         Command="{Binding SaveSnippetCmd}" />
             </Grid>

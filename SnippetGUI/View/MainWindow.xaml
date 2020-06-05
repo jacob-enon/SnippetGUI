@@ -7,7 +7,7 @@
         xmlns:viewmodel="clr-namespace:SnippetGUI.ViewModel"
         mc:Ignorable="d"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        Title="Snippet GUI" Height="600" Width="1200">
+        Title="Snippet GUI" Height="500" Width="1050">
     <Window.Resources>
         <Style x:Key="TextBoxStyle"
             TargetType="TextBox">
@@ -33,134 +33,279 @@
             <Setter Property="Padding" Value="4" />
             <Setter Property="FontWeight" Value="Medium" />
         </Style>
+        <Style TargetType="Border">
+            <Setter Property="BorderBrush" Value="Gray" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="3" />
+        </Style>
     </Window.Resources>
     <Window.DataContext>
         <viewmodel:MainViewModel />
     </Window.DataContext>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="1"
-               Content="Title" />
-        <TextBox Grid.Column="2" Grid.Row="1"
-                 Style="{StaticResource SingleLineTextBoxStyle}"
-                 Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
+        <Border Grid.Column="1" Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="2"
-               Content="Author" />
-        <TextBox Grid.Column="2" Grid.Row="2"
-                 Style="{StaticResource SingleLineTextBoxStyle}"
-                 Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}"/>
+                <Separator Grid.Column="0" Grid.Row="0"
+                       Grid.ColumnSpan="2" />
+                <TextBlock Grid.Column="0" Grid.Row="1"
+                       Text="Snippet Code" 
+                       ToolTip="The code to be inserted in the snippet"/>
+                <Separator Grid.Column="0" Grid.Row="2"
+                       Grid.ColumnSpan="2" />
 
-        <Label Grid.Column="1" Grid.Row="3"
-               Content="Description" />
-        <ScrollViewer Grid.Column="2" Grid.Row="3"
-                      VerticalScrollBarVisibility="Auto">
-            <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                <Label Grid.Column="0" Grid.Row="3"
+                   Content="Code" />
+                <TextBox Grid.Column="1" Grid.Row="3"
                      Style="{StaticResource TextBoxStyle}"
-                     TextWrapping="Wrap"/>
-        </ScrollViewer>
+                     Text="{Binding Code,
+                        UpdateSourceTrigger=PropertyChanged}" />
+            </Grid>
+        </Border>
 
-        <Label Grid.Column="1" Grid.Row="4"
-               Content="Shortcut" />
-        <TextBox Grid.Column="2" Grid.Row="4"
-                 Style="{StaticResource SingleLineTextBoxStyle}"
-                 Text="{Binding Shortcut, UpdateSourceTrigger=PropertyChanged}" />
+        <Border Grid.Column="3" Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="5"
-               Content="Language (*)" />
-        <ComboBox Grid.Column="2" Grid.Row="5"
-                  ItemsSource="{Binding Languages}"
-                  SelectedItem="{Binding Language, UpdateSourceTrigger=PropertyChanged}"/>
+                <Separator Grid.Column="0" Grid.Row="0"
+                       Grid.ColumnSpan="4" />
+                <TextBlock Grid.Column="0" Grid.Row="1"
+                       Text="Fields"
+                           ToolTip="Fields that give VS more information when importing your snippet"/>
+                <Separator Grid.Column="0" Grid.Row="2"
+                       Grid.ColumnSpan="4" />
 
-        <Label Grid.Column="3" Grid.Row="1"
-               Content="Code (*)" />
-        <ScrollViewer Grid.Column="4" Grid.Row="1"
-                      Grid.RowSpan="4"
-                      VerticalScrollBarVisibility="Auto"
-                      HorizontalScrollBarVisibility="Auto">
-            <TextBox Text="{Binding Code, UpdateSourceTrigger=PropertyChanged}"
-                     Style="{StaticResource TextBoxStyle}"
-                 AcceptsReturn="True"
-                 TextWrapping="WrapWithOverflow"/>
-        </ScrollViewer>
-
-        <Button Grid.Column="4" Grid.Row="5"
-                Content="Generate Snippet"
-                Command="{Binding GenerateSnippetCmd}"/>
-
-        <Grid Grid.Column="1" Grid.Row="6"
-              Grid.ColumnSpan="4">
-            <Grid.Style>
-                <Style TargetType="Grid">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Text,
-                            ElementName=SnippetBox}" Value="">
-                            <Setter Property="Visibility"
-                                    Value="Collapsed" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Style>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <Label Grid.Column="0" Grid.Row="0"
-                Content="Snippet" />
-            <ScrollViewer Grid.Column="1" Grid.Row="0"
-                          Grid.RowSpan="2"
-                          HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Auto">
-                <TextBox x:Name="SnippetBox"
-                         Style="{StaticResource TextBoxStyle}"
-                         Text="{Binding Snippet, UpdateSourceTrigger=PropertyChanged}" />
-            </ScrollViewer>
-
-            <Label Grid.Column="2" Grid.Row="0"
-                   Grid.RowSpan="2">
-                <Label.Content>
-                    <TextBlock>
-                        <Run Text="Save" />
-                        <LineBreak />
-                        <Run Text="Location (*)" />
-                    </TextBlock>
-                </Label.Content>
-            </Label>
-            <TextBox Grid.Column="3" Grid.Row="0"
-                     VerticalAlignment="Top"
+                <Label Grid.Column="0" Grid.Row="3"
+                   Content="Title" 
+                       ToolTip="A name for your snippet to identify it"/>
+                <TextBox Grid.Column="1" Grid.Row="3"
                      Style="{StaticResource SingleLineTextBoxStyle}"
-                     Text="{Binding SaveLocation, UpdateSourceTrigger=PropertyChanged}" />
+                     Text="{Binding Title,
+                        UpdateSourceTrigger=PropertyChanged}" />
 
-            <Button Grid.Column="3" Grid.Row="1"
-                    Content="Confirm"
+                <Label Grid.Column="0" Grid.Row="4"
+                   Content="Author"
+                       ToolTip="To identify who made the snippet"/>
+                <TextBox Grid.Column="1" Grid.Row="4"
+                     Style="{StaticResource SingleLineTextBoxStyle}"
+                     Text="{Binding Author,
+                        UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Column="0" Grid.Row="5"
+                   Content="Shortcut"
+                       ToolTip="The characters to access the snippet"/>
+                <TextBox Grid.Column="1" Grid.Row="5"
+                     Style="{StaticResource SingleLineTextBoxStyle}"
+                     Text="{Binding Shortcut,
+                        UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Column="0" Grid.Row="6"
+                   Content="Language"
+                       ToolTip="The programming language it's written in"/>
+                <ComboBox Grid.Column="1" Grid.Row="6"
+                      ItemsSource="{Binding Languages}"
+                     SelectedItem="{Binding Language}" />
+
+                <Label Grid.Column="2" Grid.Row="3"
+                   Content="Description" />
+                <TextBox Grid.Column="3" Grid.Row="3"
+                     Grid.RowSpan="3"
+                     Style="{StaticResource TextBoxStyle}"
+                     Text="{Binding Description,
+                        UpdateSourceTrigger=PropertyChanged}" 
+                         ToolTip="Information about what your snippet does"/>
+
+                <Button Grid.Column="2" Grid.Row="6"
                     Grid.ColumnSpan="2"
-                    VerticalAlignment="Top"
-                    Command="{Binding SaveSnippetCmd}"  />
-        </Grid>
+                        ToolTip="Generate a snippet"
+                    Content="Generate"
+                    Command="{Binding GenerateSnippetCmd}" />
+            </Grid>
+
+        </Border>
+
+        <Border Grid.Column="1" Grid.Row="3">
+            <Grid Grid.Column="1" Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Separator Grid.Column="0" Grid.Row="0"
+                       Grid.ColumnSpan="3" />
+                <TextBlock Grid.Column="0" Grid.Row="1"
+                       Text="Declarations"
+                           ToolTip="To add these to your code, put the ID surrounded by '$' like: $ID$"/>
+                <Separator Grid.Column="0" Grid.Row="2"
+                       Grid.ColumnSpan="3" />
+
+                <Label Grid.Column="0" Grid.Row="3"
+                   Content="ID"
+                       ToolTip="A unique ID to access the declaration"/>
+                <TextBox Grid.Column="1" Grid.Row="3"
+                     Style="{StaticResource SingleLineTextBoxStyle}"
+                         Text="{Binding DeclarationID,
+                    UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Column="0" Grid.Row="4"
+                   Content="Default"
+                       ToolTip="The default value that will be put in place of the ID"/>
+                <TextBox Grid.Column="1" Grid.Row="4"
+                     Style="{StaticResource SingleLineTextBoxStyle}"
+                         Text="{Binding DeclarationDefaultValue,
+                    UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Column="0" Grid.Row="5"
+                   Content="Tool Tip"
+                       ToolTip="Guidance on using the snippet"/>
+                <TextBox Grid.Column="1" Grid.Row="5"
+                     Style="{StaticResource SingleLineTextBoxStyle}"
+                         Text="{Binding DeclarationToolTip,
+                    UpdateSourceTrigger=PropertyChanged}" />
+
+                <Button Grid.Column="2" Grid.Row="5"
+                        Content="Add"
+                        ToolTip="Add this declaration"/>
+
+                <Separator Grid.Column="0" Grid.Row="6"
+                           Grid.ColumnSpan="3"/>
+                <TextBlock Grid.Column="0" Grid.Row="7"
+                       Text ="Current Declarations"
+                           ToolTip="Current declarations. Right click for options such as delete."/>
+                <Separator Grid.Column="0" Grid.Row="8"
+                           Grid.ColumnSpan="3"/>
+
+                <ListView Grid.Column="0" Grid.Row="9"
+                          Grid.ColumnSpan="3"
+                  ItemsSource="{Binding Declarations}"
+                  SelectedItem="{Binding SelectedDeclaration}">
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="True"
+                          ColumnHeaderToolTip="Declarations">
+                            <GridViewColumn Header="ID"
+                                    DisplayMemberBinding="{Binding Path=ID}" />
+                            <GridViewColumn Header="Default Value"
+                                    DisplayMemberBinding="{Binding Path=DefaultValue}" />
+                            <GridViewColumn Header="Tool Tip"
+                                    DisplayMemberBinding="{Binding Path=ToolTip}" />
+
+                        </GridView>
+                    </ListView.View>
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Delete"
+                              Command="{Binding DeleteDeclaration}" />
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                </ListView>
+            </Grid>
+
+        </Border>
+
+        <Border Grid.Column="3" Grid.Row="3">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <Separator Grid.Column="0" Grid.Row="0"
+                           Grid.ColumnSpan="3" />
+                <TextBlock Grid.Column="0" Grid.Row="1"
+                           Text="Code Snippet" />
+                <Separator Grid.Column="0" Grid.Row="2"
+                           Grid.ColumnSpan="3" />
+
+                <Label Grid.Column="0" Grid.Row="3"
+                       Content="Snippet"
+                       ToolTip="The snippet markup. Feel free to make changes."/>
+                <TextBox Grid.Column="1" Grid.Row="3"
+                         Style="{StaticResource TextBoxStyle}"
+                         Text="{Binding Snippet,
+                            UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Column="0" Grid.Row="3"
+                       VerticalAlignment="Bottom"
+                       Grid.RowSpan="2"
+                       ToolTip="Directory or file to save the .snippet file">
+                    <Label.Content>
+                        <TextBlock>
+                            <Run Text="Save" /><LineBreak />
+                            <Run Text="Location" />
+                        </TextBlock>
+                    </Label.Content>
+                </Label>
+                <TextBox Grid.Column="1" Grid.Row="4"
+                         Style="{StaticResource SingleLineTextBoxStyle}"
+                         Text="{Binding SaveLocation,
+                            UpdateSourceTrigger=PropertyChanged}" />
+
+                <Button Grid.Column="2" Grid.Row="4"
+                        ToolTip="Save the snippet to the given location"
+                        Content="Confirm"
+                        Command="{Binding SaveSnippetCmd}" />
+            </Grid>
+        </Border>
     </Grid>
 </mah:MetroWindow>

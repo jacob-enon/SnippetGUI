@@ -132,6 +132,57 @@ namespace SnippetGUI.ViewModel
             }
         }
 
+        private string _declarationID;
+        /// <summary>
+        /// ID of the selected declaration
+        /// </summary>
+        public string DeclarationID
+        {
+            get => _declarationID;
+            set
+            {
+                if (_declarationID != value)
+                {
+                    _declarationID = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _declarationDefaultValue;
+        /// <summary>
+        /// Default value of the selected declaration
+        /// </summary>
+        public string DeclarationDefaultValue
+        {
+            get => _declarationDefaultValue;
+            set
+            {
+                if (_declarationDefaultValue != value)
+                {
+                    _declarationDefaultValue = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _declarationToolTip;
+        /// <summary>
+        /// Tool tip of the selected declaration
+        /// </summary>
+        public string DeclarationToolTip
+        {
+            get => _declarationToolTip;
+            set
+            {
+                if (_declarationToolTip != value)
+                {
+                    _declarationToolTip = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private string _snippet;
         /// <summary>
         /// The generated code snippet

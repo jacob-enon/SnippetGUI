@@ -82,10 +82,14 @@
 
                 <Label Grid.Column="0" Grid.Row="3"
                    Content="Code" />
-                <TextBox Grid.Column="1" Grid.Row="3"
+                <ScrollViewer Grid.Column="1" Grid.Row="3"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Auto">
+                    <TextBox AcceptsReturn="True"
                      Style="{StaticResource TextBoxStyle}"
                      Text="{Binding Code,
                         UpdateSourceTrigger=PropertyChanged}" />
+                </ScrollViewer>
             </Grid>
         </Border>
 
@@ -281,10 +285,15 @@
                 <Label Grid.Column="0" Grid.Row="3"
                        Content="Snippet"
                        ToolTip="The snippet markup. Feel free to make changes."/>
-                <TextBox Grid.Column="1" Grid.Row="3"
+                <ScrollViewer Grid.Column="1" Grid.Row="3"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Auto">
+                    <TextBox Grid.Column="1" Grid.Row="3"
+                         AcceptsReturn="True"
                          Style="{StaticResource TextBoxStyle}"
                          Text="{Binding Snippet,
                             UpdateSourceTrigger=PropertyChanged}" />
+                </ScrollViewer>
 
                 <Label Grid.Column="0" Grid.Row="3"
                        VerticalAlignment="Bottom"

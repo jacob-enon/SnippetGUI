@@ -309,13 +309,15 @@ namespace SnippetGUI.ViewModel
 
         #endregion
 
+        #region Methods
+
         /// <summary>
         /// Generate a snippet
         /// </summary>
         private void GenerateSnippet()
         {
             var snippetBuilder = new SnippetBuilder(Title, Author,
-                Description, Shortcut, Language, Code, dataAccess);
+                Description, Shortcut, Language, Code, Declarations, dataAccess);
             Snippet = snippetBuilder.GenerateSnippet();
         }
 
@@ -354,5 +356,7 @@ namespace SnippetGUI.ViewModel
         /// </summary>
         /// <returns> True if the snippet can be saved </returns>
         private bool CanSaveSnippet() => !(string.IsNullOrEmpty(SaveLocation) || string.IsNullOrEmpty(Snippet));
+
+        #endregion
     }
 }

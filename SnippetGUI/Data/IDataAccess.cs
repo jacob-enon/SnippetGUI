@@ -23,6 +23,12 @@ namespace SnippetGUI.Data
         /// Get the template for a code snippet
         /// </summary>
         /// <returns> The template for a code snippet </returns>
-        string GetTemplate();
+        string GetSnippetTemplate();
+
+        /// <summary>
+        /// Get the template for a declaration
+        /// </summary>
+        /// <returns> The template for a declaration </returns>
+        string GetDeclarationTemplate();
     }
 }

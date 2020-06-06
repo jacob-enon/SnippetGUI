@@ -20,19 +20,25 @@ namespace SnippetGUI.Data
         /// <summary>
         /// Template for a code snippet
         /// </summary>
-        internal string Template { get; }
+        internal string SnippetTemplate { get; }
+
+        /// <summary>
+        /// Template for a declaration
+        /// </summary>
+        internal string DeclarationTemplate { get; }
 
         /// <summary>
         /// Construct a new Config data
         /// </summary>
         /// <param name="languages"> Available languages for the snippet </param>
         /// <param name="replaceMarker"> Marker to replace properties in the template </param>
-        /// <param name="template"> Template for a code snippet </param>
-        public Config(IList<string> languages, string replaceMarker, string template)
+        /// <param name="snippetTemplate"> Template for a code snippet </param>
+        public Config(IList<string> languages, string replaceMarker, string snippetTemplate, string declarationTemplate)
         {
             Languages = languages;
             ReplaceMarker = replaceMarker;
-            Template = template;
+            SnippetTemplate = snippetTemplate;
+            DeclarationTemplate = declarationTemplate;
         }
     }
 }

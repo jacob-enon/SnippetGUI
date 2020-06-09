@@ -37,7 +37,13 @@ namespace SnippetGUI.Data
         /// Get the template for a code snippet
         /// </summary>
         /// <returns> The template for a code snippet </returns>
-        public string GetTemplate() => config.Template;
+        public string GetSnippetTemplate() => config.SnippetTemplate;
+
+        /// <summary>
+        /// Get the template for a declaration
+        /// </summary>
+        /// <returns> The template for a declaration snippet </returns>
+        public string GetDeclarationTemplate() => config.DeclarationTemplate;
 
         /// <summary>
         /// Deserialize a JSON file

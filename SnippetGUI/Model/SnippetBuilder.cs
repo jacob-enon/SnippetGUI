@@ -1,6 +1,7 @@
 ﻿using SnippetGUI.Data;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace SnippetGUI.Model
 {
@@ -19,13 +20,16 @@ namespace SnippetGUI.Model
         private readonly string language;
         private readonly string code;
 
-        private readonly string template;
+        private readonly IList<Declaration> declarations;
+
+        private readonly string snippetTemplate;
+        private readonly string declarationTemplate;
         private readonly string replaceMarker;
 
         #endregion
 
         public SnippetBuilder(string title, string author, string description,
-            string shortcut, string language, string code, IDataAccess dataAccess = null)
+            string shortcut, string language, string code, IList<Declaration> declarations, IDataAccess dataAccess = null)
         {
             this.title = title;
             this.author = author;
@@ -34,9 +38,12 @@ namespace SnippetGUI.Model
             this.language = language;
             this.code = code;
 
+            this.declarations = declarations;
+
             dataAccess ??= new DataAccess();
 
-            template = dataAccess.GetTemplate();
+            snippetTemplate = dataAccess.GetSnippetTemplate();
+            declarationTemplate = dataAccess.GetDeclarationTemplate();
             replaceMarker = dataAccess.GetReplaceMarker();
         }
 
@@ -65,7 +72,7 @@ namespace SnippetGUI.Model
         /// <param name="dataAccess"> Data access for generating snippet template </param>
         public string GenerateSnippet()
         {
-            var snippet = template; //as it would be wrong to edit the template as it's not a template anymore
+            var snippet = snippetTemplate; //as it would be wrong to edit the template as it's not a template anymore
 
             snippet = snippet.Replace(Marker("title"), title);
             snippet = snippet.Replace(Marker("author"), author);
@@ -74,7 +81,25 @@ namespace SnippetGUI.Model
             snippet = snippet.Replace(Marker("language"), language);
             snippet = snippet.Replace(Marker("code"), code);
 
+            var declarations = GenerateDeclarations();
+            snippet = snippet.Replace(Marker("declarations"), declarations);
+
             return snippet;
+        }
+
+        private string GenerateDeclarations()
+        {
+            var declarationBuilder = new StringBuilder();
+
+            foreach (var declarationData in declarations)
+            {
+                var declaration = declarationTemplate.Replace(Marker("ID"), declarationData.ID);
+                declaration = declaration.Replace(Marker("Default"), declarationData.DefaultValue);
+                declaration = declaration.Replace(Marker("ToolTip"), declarationData.ToolTip);
+                declarationBuilder.Append(declaration);
+            }
+
+            return declarationBuilder.ToString();
         }
 
         /// <summary>

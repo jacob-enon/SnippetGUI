@@ -1,6 +1,7 @@
 ﻿using SnippetGUI.Data;
 using SnippetGUI.Model;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace SnippetGUI.ViewModel
 {
@@ -132,6 +133,8 @@ namespace SnippetGUI.ViewModel
             }
         }
 
+        #region Declaration Properties
+
         private string _declarationID;
         /// <summary>
         /// ID of the selected declaration
@@ -183,6 +186,42 @@ namespace SnippetGUI.ViewModel
             }
         }
 
+        private Declaration _declaration;
+        /// <summary>
+        /// Currently selected declaration
+        /// </summary>
+        public Declaration Declaration
+        {
+            get => _declaration;
+            set
+            {
+                if (_declaration != value)
+                {
+                    _declaration = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private ObservableCollection<Declaration> _declarations;
+        /// <summary>
+        /// All declarations in the snippet
+        /// </summary>
+        public ObservableCollection<Declaration> Declarations
+        {
+            get => _declarations;
+            set
+            {
+                if (_declarations != value)
+                {
+                    _declarations = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        #endregion
+
         private string _snippet;
         /// <summary>
         /// The generated code snippet
@@ -231,6 +270,7 @@ namespace SnippetGUI.ViewModel
             this.dataAccess = dataAccess ?? new DataAccess();
 
             Languages = new ObservableCollection<string>(this.dataAccess.GetLanguages());
+            Declarations = new ObservableCollection<Declaration>();
         }
 
         /// <summary>
@@ -246,17 +286,30 @@ namespace SnippetGUI.ViewModel
         /// <summary>
         /// Generate a code snippet
         /// </summary>
-        public RelayCommand<object> GenerateSnippetCmd
+        public ICommand GenerateSnippetCmd
             => new RelayCommand<object>(x => GenerateSnippet(),
                 x => SnippetBuilder.ValidSnippet(Languages, Language, Code));
 
         /// <summary>
         /// Save a snippet
         /// </summary>
-        public RelayCommand<object> SaveSnippetCmd
+        public ICommand SaveSnippetCmd
             => new RelayCommand<object>(x => SaveSnippet(), x => CanSaveSnippet());
 
+        /// <summary>
+        /// Add a new declaration to Declarations
+        /// </summary>
+        public ICommand NewDeclarationCmd
+            => new RelayCommand<Declaration>(x => NewDeclaration(),
+                x => Declaration.ValidDeclaration(Declarations, DeclarationID, DeclarationDefaultValue));
+
+        public ICommand DeleteDeclarationCmd
+            => new RelayCommand<Declaration>(x => DeleteDeclaration(),
+                x => Declaration != null);
+
         #endregion
+
+        #region Methods
 
         /// <summary>
         /// Generate a snippet
@@ -264,7 +317,7 @@ namespace SnippetGUI.ViewModel
         private void GenerateSnippet()
         {
             var snippetBuilder = new SnippetBuilder(Title, Author,
-                Description, Shortcut, Language, Code, dataAccess);
+                Description, Shortcut, Language, Code, Declarations, dataAccess);
             Snippet = snippetBuilder.GenerateSnippet();
         }
 
@@ -278,9 +331,32 @@ namespace SnippetGUI.ViewModel
         }
 
         /// <summary>
+        /// Add a new declaration to Declarations
+        /// </summary>
+        private void NewDeclaration()
+        {
+            var declaration = new Declaration(DeclarationID, DeclarationDefaultValue, DeclarationToolTip);
+            Declarations.Add(declaration);
+
+            DeclarationID = null;
+            DeclarationDefaultValue = null;
+            DeclarationToolTip = null;
+        }
+
+        /// <summary>
+        /// Deletes the selected declaration
+        /// </summary>
+        private void DeleteDeclaration()
+        {
+            Declarations.Remove(Declaration);
+        }
+
+        /// <summary>
         /// Determines whether a snippet file can be saved
         /// </summary>
         /// <returns> True if the snippet can be saved </returns>
         private bool CanSaveSnippet() => !(string.IsNullOrEmpty(SaveLocation) || string.IsNullOrEmpty(Snippet));
+
+        #endregion
     }
 }

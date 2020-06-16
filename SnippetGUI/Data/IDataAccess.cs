@@ -26,9 +26,9 @@ namespace SnippetGUI.Data
         string GetSnippetTemplate();
 
         /// <summary>
-        /// Get the template for a declaration
+        /// Get the template for a declaration snippet
         /// </summary>
-        /// <returns> The template for a declaration </returns>
+        /// <returns> The template for a declaration snippet </returns>
         string GetDeclarationTemplate();
     }
 }

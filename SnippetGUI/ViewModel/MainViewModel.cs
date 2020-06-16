@@ -116,28 +116,16 @@ namespace SnippetGUI.ViewModel
             }
         }
 
-        private ObservableCollection<string> _languages;
         /// <summary>
         /// Available languages that the snippet can be coded in
         /// </summary>
-        public ObservableCollection<string> Languages
-        {
-            get => _languages;
-            set
-            {
-                if (_languages != value)
-                {
-                    _languages = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        public ObservableCollection<string> Languages { get; }
 
         #region Declaration Properties
 
         private string _declarationID;
         /// <summary>
-        /// ID of the selected declaration
+        /// ID of the input declaration
         /// </summary>
         public string DeclarationID
         {
@@ -154,7 +142,7 @@ namespace SnippetGUI.ViewModel
 
         private string _declarationDefaultValue;
         /// <summary>
-        /// Default value of the selected declaration
+        /// Default value of the input declaration
         /// </summary>
         public string DeclarationDefaultValue
         {
@@ -171,7 +159,7 @@ namespace SnippetGUI.ViewModel
 
         private string _declarationToolTip;
         /// <summary>
-        /// Tool tip of the selected declaration
+        /// Tool tip of the input declaration
         /// </summary>
         public string DeclarationToolTip
         {
@@ -188,7 +176,7 @@ namespace SnippetGUI.ViewModel
 
         private Declaration _declaration;
         /// <summary>
-        /// Currently selected declaration
+        /// Currently input declaration
         /// </summary>
         public Declaration Declaration
         {
@@ -203,22 +191,10 @@ namespace SnippetGUI.ViewModel
             }
         }
 
-        private ObservableCollection<Declaration> _declarations;
         /// <summary>
         /// All declarations in the snippet
         /// </summary>
-        public ObservableCollection<Declaration> Declarations
-        {
-            get => _declarations;
-            set
-            {
-                if (_declarations != value)
-                {
-                    _declarations = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        public ObservableCollection<Declaration> Declarations { get; }
 
         #endregion
 

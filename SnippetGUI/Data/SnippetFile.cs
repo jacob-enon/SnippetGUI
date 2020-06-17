@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Text;
 
 namespace SnippetGUI.Data
 {
@@ -8,9 +7,6 @@ namespace SnippetGUI.Data
     /// </summary>
     public class SnippetFile : ISnippetFile
     {
-        private const string extension = ".snippet";
-        private readonly string defaultName = $"snippet{extension}";
-
         /// <summary>
         /// Location of the snippet file
         /// </summary>
@@ -28,7 +24,7 @@ namespace SnippetGUI.Data
         /// <param name="snippet"> Code snippet to store </param>
         public SnippetFile(string location, string snippet)
         {
-            Location = GetFileName(location);
+            Location = location;
             Snippet = snippet;
         }
 
@@ -38,35 +34,6 @@ namespace SnippetGUI.Data
         public void Save()
         {
             File.WriteAllText(Location, Snippet);
-        }
-
-        /// <summary>
-        /// Gets the name of the snippet file based on the given location
-        /// </summary>
-        /// <param name="location"> Location to store the file </param>
-        /// <returns> Name of the snippet file </returns>
-        private string GetFileName(string location)
-        {
-            var fileName = new StringBuilder();
-
-            if (Directory.Exists(location))
-            {
-                // If path is a dir, use a default file name in the dir
-                fileName.Append(Path.Combine(location, defaultName));
-            }
-            else
-            {
-                // Else, this is a file name
-                fileName.Append(location);
-
-                if (!location.EndsWith(extension))
-                {
-                    // All snippets must have the .snippet extension
-                    fileName.Append(extension);
-                }
-            }
-
-            return fileName.ToString();
         }
     }
 }

@@ -7,21 +7,31 @@ namespace SnippetGUITests
     [TestClass]
     public class SnippetValidatorTests
     {
-        [TestMethod]
-        public void ValidSnippet_ReturnsTrue_IfAllFieldsValid()
+        SnippetValidator validator;
+        List<string> availableLanguages;
+        string validCode;
+        string validLanguage;
+
+        [TestInitialize]
+        public void Init()
         {
-            // Arrange
-            var validator = new SnippetValidator();
-            var language = "a";
-            var availableLanguages = new List<string>()
+            validCode = "test snippet";
+            validLanguage = "a";
+            validator = new SnippetValidator();
+            availableLanguages = new List<string>()
             {
                 "a",
                 "b"
             };
-            var code = "test snippet";
+        }
+
+        [TestMethod]
+        public void ValidSnippet_ReturnsTrue_IfAllFieldsValid()
+        {
+            // Arrange
 
             // Act
-            var valid = validator.Validate(availableLanguages, language, code);
+            var valid = validator.Validate(availableLanguages, validLanguage, validCode);
 
             // Assert
             Assert.IsTrue(valid);
@@ -33,16 +43,9 @@ namespace SnippetGUITests
         public void ValidSnippet_ReturnsFalse_IfNotAvailableLanguage(string language)
         {
             // Arrange
-            var validator = new SnippetValidator();
-            var availableLanguages = new List<string>()
-            {
-                "a",
-                "b"
-            };
-            var code = "test snippet";
 
             // Act
-            var valid = validator.Validate(availableLanguages, language, code);
+            var valid = validator.Validate(availableLanguages, language, validCode);
 
             // Assert
             Assert.IsFalse(valid);
@@ -53,17 +56,10 @@ namespace SnippetGUITests
         [DataRow(null)]
         public void ValidSnippet_ReturnsFalse_IfCodeNullOrEmpty(string code)
         {
-            // Arrange.
-            var validator = new SnippetValidator();
-            var language = "a";
-            var availableLanguages = new List<string>()
-            {
-                "a",
-                "b"
-            };
+            // Arrange
 
             // Act
-            var valid = validator.Validate(availableLanguages, language, code);
+            var valid = validator.Validate(availableLanguages, validLanguage, code);
 
             // Assert
             Assert.IsFalse(valid);
@@ -73,13 +69,10 @@ namespace SnippetGUITests
         public void ValidSnippet_ReturnsFalse_IfNoAvailableLanguages()
         {
             // Arrange
-            var validator = new SnippetValidator();
-            var language = "a";
-            var availableLanguages = new List<string>();
-            var code = "test snippet";
+            var emptyAvailableLanguages = new List<string>();
 
             // Act
-            var valid = validator.Validate(availableLanguages, language, code);
+            var valid = validator.Validate(emptyAvailableLanguages, validLanguage, validCode);
 
             // Assert
             Assert.IsFalse(valid);
@@ -89,13 +82,10 @@ namespace SnippetGUITests
         public void ValidSnippet_ReturnsFalse_IfAvailableLanguagesIsNull()
         {
             // Arrange
-            var validator = new SnippetValidator();
-            var language = "a";
-            List<string> availableLanguages = null;
-            var code = "test snippet";
+            List<string> emptyAvailableLanguages = null;
 
             // Act
-            var valid = validator.Validate(availableLanguages, language, code);
+            var valid = validator.Validate(emptyAvailableLanguages, validLanguage, validCode);
 
             // Assert
             Assert.IsFalse(valid);

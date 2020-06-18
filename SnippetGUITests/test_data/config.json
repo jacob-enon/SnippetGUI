@@ -1,8 +1,4 @@
 {
-  "languages": [
-    "language 1",
-    "language 2"
-  ],
-  "replaceMarker": "$",
-  "snippetTemplate": "$title$$author$$description$$shortcut$$language$$code$"
+  "a": "A",
+  "b": "B"
 }

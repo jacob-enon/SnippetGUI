@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 
 namespace SnippetGUI.Data
 {
@@ -17,8 +16,7 @@ namespace SnippetGUI.Data
         /// <param name="deserialiser"> Deserialiser to deserialise the config file </param>
         public DataAccess(string configLocation, IDeserialiser deserialiser)
         {
-            config = deserialiser.DeserialiseFile<Config>(
-                configLocation ?? Path.Combine("Config", "config.json"));
+            config = deserialiser.DeserialiseFile<Config>(configLocation);
         }
 
         /// <summary>

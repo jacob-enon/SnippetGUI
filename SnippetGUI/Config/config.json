@@ -11,6 +11,6 @@
     "HTML"
   ],
   "ReplaceMarker": "$",
-  "SnippetTemplate": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<CodeSnippets xmlns=\"http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet\">\n<CodeSnippet Format=\"1.0.0\">\n<Header>\n<Title>$title$</Title>\n<Author>$author$</Author>\n<Description>$description$</Description>\n<Shortcut>$shortcut$</Shortcut>\n</Header>\n<Snippet>\n<Code Language=\"$language$\">\n<![CDATA[$code$]]>\n</Code><Declarations>$declarations$</Declarations>\n</Snippet>\n</CodeSnippet>\n</CodeSnippets>\n",
-  "DeclarationTemplate": "<Literal>\n<ID>$ID$</ID>\n<Default>$Default$</Default>\n<ToolTip>$ToolTip$</ToolTip>\n</Literal>"
+  "SnippetTemplate": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<CodeSnippets xmlns=\"http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet\">\n<CodeSnippet Format=\"1.0.0\">\n<Header>\n<Title>$title$</Title>\n<Author>$author$</Author>\n<Description>$description$</Description>\n<Shortcut>$shortcut$</Shortcut>\n</Header>\n<Snippet>\n<Code Language=\"$language$\">\n<![CDATA[$code$]]>\n</Code>\n<Declarations>\n$declarations$</Declarations>\n</Snippet>\n</CodeSnippet>\n</CodeSnippets>\n",
+  "DeclarationTemplate": "<Literal>\n<ID>$ID$</ID>\n<Default>$Default$</Default>\n<ToolTip>$ToolTip$</ToolTip>\n</Literal>\n"
 }

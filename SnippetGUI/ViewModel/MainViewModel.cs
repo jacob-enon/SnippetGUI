@@ -16,6 +16,7 @@ namespace SnippetGUI.ViewModel
         private readonly SnippetValidator snippetValidator;
         private readonly SnippetFileValidator snippetFileValidator;
         private readonly DeclarationValidator declarationValidator;
+        private readonly SnippetBuilder snippetBuilder;
 
         private string _title;
         /// <summary>
@@ -251,6 +252,7 @@ namespace SnippetGUI.ViewModel
             snippetValidator = new SnippetValidator();
             snippetFileValidator = new SnippetFileValidator();
             declarationValidator = new DeclarationValidator();
+            snippetBuilder = new SnippetBuilder(dataAccess);
 
             Languages = new ObservableCollection<string>(this.dataAccess.GetLanguages());
             Declarations = new ObservableCollection<Declaration>();
@@ -299,9 +301,8 @@ namespace SnippetGUI.ViewModel
         /// </summary>
         private void GenerateSnippet()
         {
-            var snippetBuilder = new SnippetBuilder(Title, Author,
-                Description, Shortcut, Language, Code, Declarations, dataAccess);
-            Snippet = snippetBuilder.GenerateSnippet();
+            Snippet = snippetBuilder.GenerateSnippet(Title, Author,
+                Description, Shortcut, Language, Code, Declarations);
         }
 
         /// <summary>

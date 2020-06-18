@@ -1,52 +1,59 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using SnippetGUI.Data;
 using SnippetGUI.Model;
 using System.Collections.Generic;
-using System.IO;
 
 namespace SnippetGUITests
 {
     [TestClass]
     public class SnippetBuilderTests
     {
-        //[TestMethod]
-        //public void GenerateSnippet_ReplacesSnippetTemplateProperties()
-        //{
-        //    // Arrange
-        //    var title = "a";
-        //    var author = "b";
-        //    var description = "c";
-        //    var shortcut = "d";
-        //    var language = "e";
-        //    var code = "f";
-        //    var templateLocation = Path.Combine("test_data", "config.json");
-        //    var builder = new SnippetBuilder(title, author, description, shortcut, language, code,
-        //        new List<Declaration>(), new DataAccess(templateLocation));
+        Mock<IDataAccess> dataAccess;
+        string snippetTemplate;
+        string declarationTemplate;
 
-        //    // Act
-        //    var snippet = builder.GenerateSnippet();
+        [TestInitialize]
+        public void Init()
+        {
+            snippetTemplate = "$title$$author$$description$$shortcut$$language$$code$$declarations$";
+            declarationTemplate = "$ID$$Default$$ToolTip$";
 
-        //    // Act
-        //    Assert.AreEqual("abcdef", snippet);
-        //}
+            dataAccess = new Mock<IDataAccess>();
+            dataAccess.Setup(x => x.GetSnippetTemplate()).Returns(snippetTemplate);
+            dataAccess.Setup(x => x.GetDeclarationTemplate()).Returns(declarationTemplate);
+            dataAccess.Setup(x => x.GetReplaceMarker()).Returns("$");
+        }
 
-        //[TestMethod]
-        //public void GenerateSnippet_WithDeclarations_ReplacesDeclarationTemplateProperties()
-        //{
-        //    // Arrange
-        //    var declarations = new List<Declaration>()
-        //    {
-        //        new Declaration("1", "a"),
-        //        new Declaration("2", "b", "tip1")
-        //    };
-        //    var templateLocation = Path.Combine("test_data", "config_with_declarations.json");
-        //    var builder = new SnippetBuilder("", "", "", "", "", "", declarations, new DataAccess(templateLocation));
+        [TestMethod]
+        public void SnippetBuilder_BuildsSnippet()
+        {
+            // Arrange
+            var title = "test title";
+            var author = "test author";
+            var description = "test description";
+            var shortcut = "test shortcut";
+            var language = "test language";
+            var code = "do this();";
 
-        //    // Act
-        //    var snippet = builder.GenerateSnippet();
+            var declaration1 = new Declaration("1", "default 1");
+            var declaration2 = new Declaration("2", "default 2", "tool tip 2");
+            var declarations = new List<Declaration>()
+            {
+                declaration1,
+                declaration2
+            };
 
-        //    // Assert
-        //    Assert.AreEqual("1a2btip1", snippet);
-        //}
+            var expected = $"{title}{author}{description}{shortcut}{language}{code}{declaration1.ID}" +
+                $"{declaration1.DefaultValue}{declaration2.ID}{declaration2.DefaultValue}{declaration2.ToolTip}";
+
+            var builder = new SnippetBuilder(dataAccess.Object);
+
+            // Act
+            var snippet = builder.GenerateSnippet(title, author, description, shortcut, language, code, declarations);
+
+            // Assert
+            Assert.AreEqual(expected, snippet);
+        }
     }
 }

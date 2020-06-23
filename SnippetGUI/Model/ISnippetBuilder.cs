@@ -9,7 +9,7 @@ namespace SnippetGUI.Model
     public interface ISnippetBuilder
     {
         /// <summary>
-        /// Generate a declaration
+        /// Generate a snippet
         /// </summary>
         /// <param name="title"> Snippet title </param>
         /// <param name="author"> Snippet author </param>

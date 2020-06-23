@@ -254,14 +254,13 @@ namespace SnippetGUI.ViewModel
             declarationValidator = new DeclarationValidator();
             snippetBuilder = new SnippetBuilder(dataAccess);
 
-            Languages = new ObservableCollection<string>(this.dataAccess.GetLanguages());
+            Languages = new ObservableCollection<string>(dataAccess.GetLanguages());
             Declarations = new ObservableCollection<Declaration>();
         }
 
         /// <summary>
         /// Construct a new MainViewModel with default dataaccess and snippetbuilders
         /// </summary>
-        /// <remarks> can't be done w/ defaults as it throws null reference on InitializeComponent() </remarks>
         public MainViewModel() : this(new DataAccess(Constants.ConfigFile, new JsonDeserialiser())) { }
 
         #endregion

@@ -1,5 +1,6 @@
 ﻿using SnippetGUI.Data;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SnippetGUI.Model
@@ -25,7 +26,7 @@ namespace SnippetGUI.Model
         public SnippetBuilder(IDataAccess dataAccess)
         {
             snippetTemplate = dataAccess.GetSnippetTemplate();
-            declarationTemplate = dataAccess.GetSnippetTemplate();
+            declarationTemplate = dataAccess.GetDeclarationTemplate();
             replaceMarker = dataAccess.GetReplaceMarker();
         }
 

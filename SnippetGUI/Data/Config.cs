@@ -5,27 +5,27 @@ namespace SnippetGUI.Data
     /// <summary>
     /// Configuration data to build snippets
     /// </summary>
-    internal class Config
+    public class Config
     {
         /// <summary>
         /// Available languages for the snippet
         /// </summary>
-        internal IList<string> Languages { get; }
+        public IList<string> Languages { get; }
 
         /// <summary>
         /// Marker to replace properties in the template
         /// </summary>
-        internal string ReplaceMarker { get; }
+        public string ReplaceMarker { get; }
 
         /// <summary>
         /// Template for a code snippet
         /// </summary>
-        internal string SnippetTemplate { get; }
+        public string SnippetTemplate { get; }
 
         /// <summary>
         /// Template for a declaration
         /// </summary>
-        internal string DeclarationTemplate { get; }
+        public string DeclarationTemplate { get; }
 
         /// <summary>
         /// Construct a new Config data

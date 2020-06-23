@@ -1,9 +1,0 @@
-{
-  "languages": [
-    "language 1",
-    "language 2"
-  ],
-  "replaceMarker": "$",
-  "snippetTemplate": "$declarations$",
-  "declarationTemplate": "$ID$$Default$$ToolTip$"
-}

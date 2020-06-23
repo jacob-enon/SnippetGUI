@@ -1,141 +1,59 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using SnippetGUI.Data;
 using SnippetGUI.Model;
 using System.Collections.Generic;
-using System.IO;
 
 namespace SnippetGUITests
 {
     [TestClass]
     public class SnippetBuilderTests
     {
-        [TestMethod]
-        public void GenerateSnippet_ReplacesSnippetTemplateProperties()
+        Mock<IDataAccess> dataAccess;
+        string snippetTemplate;
+        string declarationTemplate;
+
+        [TestInitialize]
+        public void Init()
         {
-            // Arrange
-            var title = "a";
-            var author = "b";
-            var description = "c";
-            var shortcut = "d";
-            var language = "e";
-            var code = "f";
-            var templateLocation = Path.Combine("test_data", "config.json");
-            var builder = new SnippetBuilder(title, author, description, shortcut, language, code,
-                new List<Declaration>(), new DataAccess(templateLocation));
+            snippetTemplate = "$title$$author$$description$$shortcut$$language$$code$$declarations$";
+            declarationTemplate = "$ID$$Default$$ToolTip$";
 
-            // Act
-            var snippet = builder.GenerateSnippet();
-
-            // Act
-            Assert.AreEqual("abcdef", snippet);
+            dataAccess = new Mock<IDataAccess>();
+            dataAccess.Setup(x => x.GetSnippetTemplate()).Returns(snippetTemplate);
+            dataAccess.Setup(x => x.GetDeclarationTemplate()).Returns(declarationTemplate);
+            dataAccess.Setup(x => x.GetReplaceMarker()).Returns("$");
         }
 
         [TestMethod]
-        public void GenerateSnippet_WithDeclarations_ReplacesDeclarationTemplateProperties()
+        public void SnippetBuilder_BuildsSnippet()
         {
             // Arrange
+            var title = "test title";
+            var author = "test author";
+            var description = "test description";
+            var shortcut = "test shortcut";
+            var language = "test language";
+            var code = "do this();";
+
+            var declaration1 = new Declaration("1", "default 1");
+            var declaration2 = new Declaration("2", "default 2", "tool tip 2");
             var declarations = new List<Declaration>()
             {
-                new Declaration("1", "a"),
-                new Declaration("2", "b", "tip1")
-            };
-            var templateLocation = Path.Combine("test_data", "config_with_declarations.json");
-            var builder = new SnippetBuilder("", "", "", "", "", "", declarations, new DataAccess(templateLocation));
-
-            // Act
-            var snippet = builder.GenerateSnippet();
-
-            // Assert
-            Assert.AreEqual("1a2btip1", snippet);
-        }
-
-        [TestMethod]
-        public void ValidSnippet_ReturnsTrue_IfAllFieldsValid()
-        {
-            // Arrange
-            var language = "a";
-            var availableLanguages = new List<string>()
-            {
-                "a",
-                "b"
-            };
-            var code = "test snippet";
-
-            // Act
-            var valid = SnippetBuilder.ValidSnippet(availableLanguages, language, code);
-
-            // Assert
-            Assert.IsTrue(valid);
-        }
-
-        [TestMethod]
-        [DataRow("c")]
-        [DataRow(null)]
-        public void ValidSnippet_ReturnsFalse_IfNotAvailableLanguage(string language)
-        {
-            // Arrange
-            var availableLanguages = new List<string>()
-            {
-                "a",
-                "b"
-            };
-            var code = "test snippet";
-
-            // Act
-            var valid = SnippetBuilder.ValidSnippet(availableLanguages, language, code);
-
-            // Assert
-            Assert.IsFalse(valid);
-        }
-
-        [TestMethod]
-        [DataRow("")]
-        [DataRow(null)]
-        public void ValidSnippet_ReturnsFalse_IfCodeNullOrEmpty(string code)
-        {
-            // Arrange
-            var language = "a";
-            var availableLanguages = new List<string>()
-            {
-                "a",
-                "b"
+                declaration1,
+                declaration2
             };
 
-            // Act
-            var valid = SnippetBuilder.ValidSnippet(availableLanguages, language, code);
+            var expected = $"{title}{author}{description}{shortcut}{language}{code}{declaration1.ID}" +
+                $"{declaration1.DefaultValue}{declaration2.ID}{declaration2.DefaultValue}{declaration2.ToolTip}";
 
-            // Assert
-            Assert.IsFalse(valid);
-        }
-
-        [TestMethod]
-        public void ValidSnippet_ReturnsFalse_IfNoAvailableLanguages()
-        {
-            // Arrange
-            var language = "a";
-            var availableLanguages = new List<string>();
-            var code = "test snippet";
+            var builder = new SnippetBuilder(dataAccess.Object);
 
             // Act
-            var valid = SnippetBuilder.ValidSnippet(availableLanguages, language, code);
+            var snippet = builder.GenerateSnippet(title, author, description, shortcut, language, code, declarations);
 
             // Assert
-            Assert.IsFalse(valid);
-        }
-
-        [TestMethod]
-        public void ValidSnippet_ReturnsFalse_IfAvailableLanguagesIsNull()
-        {
-            // Arrange
-            var language = "a";
-            List<string> availableLanguages = null;
-            var code = "test snippet";
-
-            // Act
-            var valid = SnippetBuilder.ValidSnippet(availableLanguages, language, code);
-
-            // Assert
-            Assert.IsFalse(valid);
+            Assert.AreEqual(expected, snippet);
         }
     }
 }

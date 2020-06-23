@@ -1,6 +1,6 @@
 ﻿using SnippetGUI.Data;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace SnippetGUI.Model
@@ -13,35 +13,18 @@ namespace SnippetGUI.Model
     {
         #region Properties
 
-        private readonly string title;
-        private readonly string author;
-        private readonly string description;
-        private readonly string shortcut;
-        private readonly string language;
-        private readonly string code;
-
-        private readonly IList<Declaration> declarations;
-
         private readonly string snippetTemplate;
         private readonly string declarationTemplate;
         private readonly string replaceMarker;
 
         #endregion
 
-        public SnippetBuilder(string title, string author, string description,
-            string shortcut, string language, string code, IList<Declaration> declarations, IDataAccess dataAccess = null)
+        /// <summary>
+        /// Construct a new SnippetBuilder
+        /// </summary>
+        /// <param name="dataAccess"> Access to data about the snippet </param>
+        public SnippetBuilder(IDataAccess dataAccess)
         {
-            this.title = title;
-            this.author = author;
-            this.description = description;
-            this.shortcut = shortcut;
-            this.language = language;
-            this.code = code;
-
-            this.declarations = declarations;
-
-            dataAccess ??= new DataAccess();
-
             snippetTemplate = dataAccess.GetSnippetTemplate();
             declarationTemplate = dataAccess.GetDeclarationTemplate();
             replaceMarker = dataAccess.GetReplaceMarker();
@@ -49,58 +32,53 @@ namespace SnippetGUI.Model
 
         #region Methods
 
-        /// <summary>
-        /// Determines if a snippet is valid to generate
-        /// </summary>
-        /// <param name="availableLanguages"> Available languages for a snippet </param>
-        /// <param name="language"> Language the snippet is in </param>
-        /// <param name="code"> Code for the snippet </param>
-        /// <returns> True if a snippet is valid </returns>
-        /// <remarks>
-        /// A snippet must have code to insert,
-        /// and the language must be one available in this configuration.
-        /// There are no limitations on Title, Author, Shortcut etc. as these are optional
-        ///     fields in VS
-        /// </remarks>
-        public static bool ValidSnippet(IList<string> availableLanguages, string language, string code) 
-            => !string.IsNullOrEmpty(code) && (availableLanguages?.Contains(language) ?? false);
-
-        /// <summary>
-        /// Generate a code snippet
-        /// </summary>
-        /// <returns> A Code Snippet </returns>
-        /// <param name="dataAccess"> Data access for generating snippet template </param>
-        public string GenerateSnippet()
+        /// <inheritdoc/>
+        public string GenerateSnippet(string title, string author, string description,
+            string shortcut, string language, string code, IList<Declaration> declarationData)
         {
             var snippet = snippetTemplate; //as it would be wrong to edit the template as it's not a template anymore
 
-            snippet = snippet.Replace(Marker("title"), title);
-            snippet = snippet.Replace(Marker("author"), author);
-            snippet = snippet.Replace(Marker("description"), description);
-            snippet = snippet.Replace(Marker("shortcut"), shortcut);
-            snippet = snippet.Replace(Marker("language"), language);
-            snippet = snippet.Replace(Marker("code"), code);
+            snippet = FillData(snippet, "title", title);
+            snippet = FillData(snippet, "author", author);
+            snippet = FillData(snippet, "description", description);
+            snippet = FillData(snippet, "shortcut", shortcut);
+            snippet = FillData(snippet, "language", language);
+            snippet = FillData(snippet, "code", code);
 
-            var declarations = GenerateDeclarations();
+            var declarations = GenerateDeclarations(declarationData);
             snippet = snippet.Replace(Marker("declarations"), declarations);
 
             return snippet;
         }
 
-        private string GenerateDeclarations()
+        /// <summary>
+        /// Generate all declarations in a snippet
+        /// </summary>
+        /// <param name="declarations"> Declaration data </param>
+        /// <returns> Declarations snippet </returns>
+        private string GenerateDeclarations(IList<Declaration> declarations)
         {
             var declarationBuilder = new StringBuilder();
 
             foreach (var declarationData in declarations)
             {
-                var declaration = declarationTemplate.Replace(Marker("ID"), declarationData.ID);
-                declaration = declaration.Replace(Marker("Default"), declarationData.DefaultValue);
-                declaration = declaration.Replace(Marker("ToolTip"), declarationData.ToolTip);
+                var declaration = FillData(declarationTemplate, "ID", declarationData.ID);
+                declaration = FillData(declaration, "Default", declarationData.DefaultValue);
+                declaration = FillData(declaration, "ToolTip", declarationData.ToolTip);
                 declarationBuilder.Append(declaration);
             }
 
             return declarationBuilder.ToString();
         }
+
+        /// <summary>
+        /// Fill the snippet with data
+        /// </summary>
+        /// <param name="template"> Template to fill </param>
+        /// <param name="id"> ID to replace </param>
+        /// <param name="value"> Data to fill in place of ID </param>
+        /// <returns> Template filled with data </returns>
+        private string FillData(string template, string id, string value) => template.Replace(Marker(id), value);
 
         /// <summary>
         /// Return marker for template property

@@ -13,6 +13,10 @@ namespace SnippetGUI.ViewModel
         #region Properties
 
         private readonly IDataAccess dataAccess;
+        private readonly SnippetValidator snippetValidator;
+        private readonly SnippetFileValidator snippetFileValidator;
+        private readonly DeclarationValidator declarationValidator;
+        private readonly SnippetBuilder snippetBuilder;
 
         private string _title;
         /// <summary>
@@ -243,17 +247,21 @@ namespace SnippetGUI.ViewModel
         /// <param name="snippetBuilder"> Snippet Builder to generate snippet </param>
         public MainViewModel(IDataAccess dataAccess)
         {
-            this.dataAccess = dataAccess ?? new DataAccess();
+            this.dataAccess = dataAccess;
 
-            Languages = new ObservableCollection<string>(this.dataAccess.GetLanguages());
+            snippetValidator = new SnippetValidator();
+            snippetFileValidator = new SnippetFileValidator();
+            declarationValidator = new DeclarationValidator();
+            snippetBuilder = new SnippetBuilder(dataAccess);
+
+            Languages = new ObservableCollection<string>(dataAccess.GetLanguages());
             Declarations = new ObservableCollection<Declaration>();
         }
 
         /// <summary>
         /// Construct a new MainViewModel with default dataaccess and snippetbuilders
         /// </summary>
-        /// <remarks> can't be done w/ defaults as it throws null reference on InitializeComponent() </remarks>
-        public MainViewModel() : this(new DataAccess()) { }
+        public MainViewModel() : this(new DataAccess(Constants.ConfigFile, new JsonDeserialiser())) { }
 
         #endregion
 
@@ -264,20 +272,20 @@ namespace SnippetGUI.ViewModel
         /// </summary>
         public ICommand GenerateSnippetCmd
             => new RelayCommand<object>(x => GenerateSnippet(),
-                x => SnippetBuilder.ValidSnippet(Languages, Language, Code));
+                x => snippetValidator.Validate(Languages, Language, Code));
 
         /// <summary>
         /// Save a snippet
         /// </summary>
         public ICommand SaveSnippetCmd
-            => new RelayCommand<object>(x => SaveSnippet(), x => CanSaveSnippet());
+            => new RelayCommand<object>(x => SaveSnippet(), x => snippetFileValidator.Validate(Snippet, SaveLocation));
 
         /// <summary>
         /// Add a new declaration to Declarations
         /// </summary>
         public ICommand NewDeclarationCmd
             => new RelayCommand<Declaration>(x => NewDeclaration(),
-                x => Declaration.ValidDeclaration(Declarations, DeclarationID, DeclarationDefaultValue));
+                x => declarationValidator.Validate(Declarations, DeclarationID, DeclarationDefaultValue));
 
         public ICommand DeleteDeclarationCmd
             => new RelayCommand<Declaration>(x => DeleteDeclaration(),
@@ -292,9 +300,8 @@ namespace SnippetGUI.ViewModel
         /// </summary>
         private void GenerateSnippet()
         {
-            var snippetBuilder = new SnippetBuilder(Title, Author,
-                Description, Shortcut, Language, Code, Declarations, dataAccess);
-            Snippet = snippetBuilder.GenerateSnippet();
+            Snippet = snippetBuilder.GenerateSnippet(Title, Author,
+                Description, Shortcut, Language, Code, Declarations);
         }
 
         /// <summary>
@@ -314,9 +321,9 @@ namespace SnippetGUI.ViewModel
             var declaration = new Declaration(DeclarationID, DeclarationDefaultValue, DeclarationToolTip);
             Declarations.Add(declaration);
 
-            DeclarationID = null;
-            DeclarationDefaultValue = null;
-            DeclarationToolTip = null;
+            DeclarationID = string.Empty;
+            DeclarationDefaultValue = string.Empty;
+            DeclarationToolTip = string.Empty;
         }
 
         /// <summary>
@@ -326,12 +333,6 @@ namespace SnippetGUI.ViewModel
         {
             Declarations.Remove(Declaration);
         }
-
-        /// <summary>
-        /// Determines whether a snippet file can be saved
-        /// </summary>
-        /// <returns> True if the snippet can be saved </returns>
-        private bool CanSaveSnippet() => !(string.IsNullOrEmpty(SaveLocation) || string.IsNullOrEmpty(Snippet));
 
         #endregion
     }

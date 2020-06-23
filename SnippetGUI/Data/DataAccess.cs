@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 
 namespace SnippetGUI.Data
 {
@@ -15,10 +13,10 @@ namespace SnippetGUI.Data
         /// Construct a new DataAccess
         /// </summary>
         /// <param name="configLocation"> Location of the config file </param>
-        public DataAccess(string configLocation = null)
+        /// <param name="deserialiser"> Deserialiser to deserialise the config file </param>
+        public DataAccess(string configLocation, IDeserialiser deserialiser)
         {
-            config = DeserializeJsonFile<Config>(
-                configLocation ?? Path.Combine("Config", "config.json"));
+            config = deserialiser.DeserialiseFile<Config>(configLocation);
         }
 
         /// <summary>
@@ -44,13 +42,5 @@ namespace SnippetGUI.Data
         /// </summary>
         /// <returns> The template for a declaration snippet </returns>
         public string GetDeclarationTemplate() => config.DeclarationTemplate;
-
-        /// <summary>
-        /// Deserialize a JSON file
-        /// </summary>
-        /// <typeparam name="T"> Type of object to deserialize </typeparam>
-        /// <param name="path"> Path of the JSON file </param>
-        /// <returns> Deserialized object </returns>
-        private T DeserializeJsonFile<T>(string path) => JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
     }
 }

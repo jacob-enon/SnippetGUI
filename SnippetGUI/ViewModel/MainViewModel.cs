@@ -3,6 +3,8 @@ using BigJacob.MVVM;
 using SnippetGUI.Data;
 using SnippetGUI.Model;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SnippetGUI.ViewModel
@@ -277,7 +279,8 @@ namespace SnippetGUI.ViewModel
         /// Save a snippet
         /// </summary>
         public ICommand SaveSnippetCmd
-            => new RelayCommand<object>(x => SaveSnippet(), x => snippetFileValidator.Validate(Snippet, SaveLocation));
+            => new RelayCommand<object>(async x => await SaveSnippet(),
+                x => snippetFileValidator.Validate(Snippet, SaveLocation));
 
         /// <summary>
         /// Add a new declaration to Declarations
@@ -306,10 +309,13 @@ namespace SnippetGUI.ViewModel
         /// <summary>
         /// Save a snippet to a file
         /// </summary>
-        private void SaveSnippet()
+        /// <returns> A task </returns>
+        private async Task SaveSnippet()
         {
             var snippetFile = new SnippetFile(SaveLocation, Snippet);
-            snippetFile.Save();
+            await snippetFile.SaveAsync();
+
+            MessageBox.Show($"Your snippet has been saved to: {SaveLocation}", "Snippet saved!");
         }
 
         /// <summary>

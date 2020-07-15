@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 
 namespace SnippetGUI.Data
 {
@@ -29,11 +30,13 @@ namespace SnippetGUI.Data
         }
 
         /// <summary>
-        /// Save the snippet file
+        /// Asynchronously save the snippet file
         /// </summary>
-        public void Save()
+        /// <returns> A task </returns>
+        public async Task SaveAsync()
         {
-            File.WriteAllText(Location, Snippet);
+            using var file = new StreamWriter(Location);
+            await file.WriteAsync(Snippet);
         }
     }
 }

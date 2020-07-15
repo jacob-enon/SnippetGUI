@@ -1,6 +1,5 @@
 ﻿using SnippetGUI.Data;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace SnippetGUI.Model
@@ -36,7 +35,7 @@ namespace SnippetGUI.Model
         public string GenerateSnippet(string title, string author, string description,
             string shortcut, string language, string code, IList<Declaration> declarationData)
         {
-            var snippet = snippetTemplate; //as it would be wrong to edit the template as it's not a template anymore
+            var snippet = snippetTemplate; // it would be wrong to edit template as it's not a template anymore
 
             snippet = FillData(snippet, "title", title);
             snippet = FillData(snippet, "author", author);

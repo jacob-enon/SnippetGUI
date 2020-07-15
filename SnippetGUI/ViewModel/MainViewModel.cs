@@ -1,6 +1,10 @@
-﻿using SnippetGUI.Data;
+﻿using BigJacob.Data;
+using BigJacob.MVVM;
+using SnippetGUI.Data;
 using SnippetGUI.Model;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SnippetGUI.ViewModel
@@ -12,7 +16,6 @@ namespace SnippetGUI.ViewModel
     {
         #region Properties
 
-        private readonly IDataAccess dataAccess;
         private readonly SnippetValidator snippetValidator;
         private readonly SnippetFileValidator snippetFileValidator;
         private readonly DeclarationValidator declarationValidator;
@@ -244,11 +247,8 @@ namespace SnippetGUI.ViewModel
         /// Construct a new MainViewModel
         /// </summary>
         /// <param name="dataAccess"> Data Access for config files </param>
-        /// <param name="snippetBuilder"> Snippet Builder to generate snippet </param>
         public MainViewModel(IDataAccess dataAccess)
         {
-            this.dataAccess = dataAccess;
-
             snippetValidator = new SnippetValidator();
             snippetFileValidator = new SnippetFileValidator();
             declarationValidator = new DeclarationValidator();
@@ -261,7 +261,8 @@ namespace SnippetGUI.ViewModel
         /// <summary>
         /// Construct a new MainViewModel with default dataaccess and snippetbuilders
         /// </summary>
-        public MainViewModel() : this(new DataAccess(Constants.ConfigFile, new JsonDeserialiser())) { }
+        public MainViewModel()
+            : this(new DataAccess(Constants.ConfigFile, new JsonDeserialiser())) { }
 
         #endregion
 
@@ -278,7 +279,8 @@ namespace SnippetGUI.ViewModel
         /// Save a snippet
         /// </summary>
         public ICommand SaveSnippetCmd
-            => new RelayCommand<object>(x => SaveSnippet(), x => snippetFileValidator.Validate(Snippet, SaveLocation));
+            => new RelayCommand<object>(async x => await SaveSnippet(),
+                x => snippetFileValidator.Validate(Snippet, SaveLocation));
 
         /// <summary>
         /// Add a new declaration to Declarations
@@ -307,10 +309,13 @@ namespace SnippetGUI.ViewModel
         /// <summary>
         /// Save a snippet to a file
         /// </summary>
-        private void SaveSnippet()
+        /// <returns> A task </returns>
+        private async Task SaveSnippet()
         {
             var snippetFile = new SnippetFile(SaveLocation, Snippet);
-            snippetFile.Save();
+            await snippetFile.SaveAsync();
+
+            MessageBox.Show($"Your snippet has been saved to: {SaveLocation}", "Snippet saved!");
         }
 
         /// <summary>

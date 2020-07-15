@@ -1,4 +1,6 @@
-﻿namespace SnippetGUI.Data
+﻿using System.Threading.Tasks;
+
+namespace SnippetGUI.Data
 {
     /// <summary>
     /// A file containing a code snippet
@@ -16,8 +18,9 @@
         string Snippet { get; }
 
         /// <summary>
-        /// Save the file
+        /// Asynchronously save the file
         /// </summary>
-        void Save();
+        /// <returns> A task </returns>
+        Task SaveAsync();
     }
 }
